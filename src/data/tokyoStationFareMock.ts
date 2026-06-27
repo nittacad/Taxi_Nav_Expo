@@ -16,12 +16,13 @@ import {
   resolveDayCategory,
   resolveTimePreset,
 } from '@/types/fareWaveform';
+import { resolveTimeRange } from '@/data/fareWaveformEngine';
 
 export const JR_BASE_FARE = 310;
 export const METRO_BASE_FARE = 200;
 export const NIHONBASHI_RESCUE_LAG_MIN = 7;
 
-export const EXIT_LINE_COLORS: Record<ExitId, string> = {
+export const EXIT_LINE_COLORS: Record<string, string> = {
   yaesu: '#80C342',
   nihonbashi: '#009BBF',
   'maru-north': '#F62E36',
@@ -80,19 +81,6 @@ const SHINKANSEN_SPLIT = {
   yaesu: 0.35,
   nihonbashi: 0.25,
 } as const;
-
-const TIME_PRESETS: Record<
-  TimePreset,
-  { start: number; end: number; label: string }
-> = {
-  peak: { start: 17 * 60, end: 19 * 60, label: '17:00–19:00（2時間・高密度）' },
-  peak_narrow: {
-    start: 17 * 60 + 30,
-    end: 18 * 60 + 30,
-    label: '17:30–18:30（1時間）',
-  },
-  evening: { start: 18 * 60, end: 20 * 60, label: '18:00–20:00（2時間）' },
-};
 
 type ArrivalEvent = {
   minute: number;
@@ -655,7 +643,7 @@ export function getTokyoStationFareWaveform(
 ): StationFareWaveformData {
   const dayCategory = resolveDayCategory(dayCategoryInput);
   const timePreset = resolveTimePreset(timePresetInput);
-  const preset = TIME_PRESETS[timePreset];
+  const preset = resolveTimeRange(timePreset);
   const viewStart = preset.start;
   const viewEnd = preset.end;
   const genStart = viewStart - NIHONBASHI_RESCUE_LAG_MIN;
@@ -695,17 +683,7 @@ export function getTokyoStationFareWaveform(
   };
 }
 
-export function isFareWaveformStationSupported(stationId: number): boolean {
-  return stationId === 1;
-}
-
-export function contrastCheckColor(bgHex: string): string {
-  const hex = bgHex.replace('#', '');
-  const r = parseInt(hex.slice(0, 2), 16);
-  const g = parseInt(hex.slice(2, 4), 16);
-  const b = parseInt(hex.slice(4, 6), 16);
-  const lum = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
-  return lum > 0.55 ? '#141414' : '#FFFFFF';
-}
 
 export { EXITS as TOKYO_STATION_EXITS };
+export { contrastCheckColor } from '@/data/fareWaveformEngine';
+export { isFareWaveformStationSupported } from '@/data/fareWaveformRegistry';

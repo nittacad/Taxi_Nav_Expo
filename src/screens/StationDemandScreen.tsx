@@ -14,37 +14,31 @@ import {
   FlatList,
   ListRenderItem,
   TouchableOpacity,
+  Pressable,
 } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { useRouter, Href } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 import { useDemand } from '@/state/demandStore';
 import { FARE_WAVEFORM_SUPPORTED_STATION_IDS, StationDemand } from '@/types';
+import { getDemandColor, getDemandLevelLabel } from '@/utils/demandLevel';
+import { locationService, LocationData } from '@/services/LocationService';
+import {
+  AutoRouteLeg,
+  buildAutoRouteFromLocation,
+  formatTravelMinutes,
+  sortStationDemands,
+  STATION_SORT_LABELS,
+  StationSortKey,
+  URBAN_TAXI_SPEED_KMH,
+} from '@/utils/stationDemandSort';
 
-/**
- * 需要レベルの色定義
- */
-const getDemandColor = (demand: number): string => {
-  if (demand >= 80) return '#E74C3C'; // 赤（高）
-  if (demand >= 60) return '#F39C12'; // オレンジ（中）
-  if (demand >= 40) return '#F1C40F'; // 黄色（中-低）
-  return '#27AE60'; // 緑（低）
-};
-
-/**
- * リスクレベルのテキスト表示
- */
-const getRiskLevelLabel = (riskLevel: string): string => {
-  switch (riskLevel) {
-    case 'high':
-      return '高リスク';
-    case 'medium':
-      return '中リスク';
-    case 'low':
-      return '低リスク';
-    default:
-      return 'N/A';
-  }
-};
+const STATION_SORT_KEYS: StationSortKey[] = [
+  'default',
+  'demand',
+  'confidence',
+  'autoRoute',
+];
 
 /**
  * トレンド表示アイコン
@@ -69,17 +63,26 @@ interface StationCardProps {
   station: StationDemand;
   onPress?: () => void;
   showFareWaveformHint?: boolean;
+  routeIndex?: number;
+  routeLeg?: AutoRouteLeg;
 }
 
 const StationCard: React.FC<StationCardProps> = React.memo(
-  ({ station, onPress, showFareWaveformHint = false }) => {
+  ({ station, onPress, showFareWaveformHint = false, routeIndex, routeLeg }) => {
   const demandColor = getDemandColor(station.predictedDemand);
   const confidencePercent = Math.round(station.confidence * 100);
 
   const cardContent = (
     <>
       <View style={styles.cardHeader}>
-        <Text style={styles.stationName}>{station.stationName}</Text>
+        <View style={styles.stationNameRow}>
+          {routeIndex !== undefined && (
+            <View style={styles.routeBadge}>
+              <Text style={styles.routeBadgeText}>{routeIndex}</Text>
+            </View>
+          )}
+          <Text style={styles.stationName}>{station.stationName}</Text>
+        </View>
         <View style={styles.cardHeaderRight}>
           {showFareWaveformHint && (
             <Ionicons
@@ -110,7 +113,7 @@ const StationCard: React.FC<StationCardProps> = React.memo(
           需要: {station.predictedDemand}%
         </Text>
         <Text style={[styles.riskBadge, { color: demandColor }]}>
-          {getRiskLevelLabel(station.riskLevel)}
+          {getDemandLevelLabel(station.riskLevel) || 'N/A'}
         </Text>
       </View>
 
@@ -118,6 +121,14 @@ const StationCard: React.FC<StationCardProps> = React.memo(
         <Text style={styles.statsText}>
           信頼度: {confidencePercent}% | 更新: {new Date(station.timestamp).toLocaleTimeString()}
         </Text>
+        {routeLeg && (
+          <Text style={styles.routeEtaText}>
+            到着目安 {formatTravelMinutes(routeLeg.cumulativeMinutes)}
+            {' · '}
+            区間 {formatTravelMinutes(routeLeg.legMinutes)}（
+            {routeLeg.legDistanceKm.toFixed(1)}km）
+          </Text>
+        )}
         {showFareWaveformHint && (
           <Text style={styles.fareHintText}>タップで運賃波形を表示</Text>
         )}
@@ -178,6 +189,63 @@ export const StationDemandScreen: React.FC = () => {
   const router = useRouter();
   const { state, fetchMultipleStations, setOnlineStatus } = useDemand();
   const [refreshing, setRefreshing] = useState(false);
+  const [sortKey, setSortKey] = useState<StationSortKey>('demand');
+  const [userLocation, setUserLocation] = useState<LocationData | null>(null);
+  const [locationLoading, setLocationLoading] = useState(false);
+  const [locationDenied, setLocationDenied] = useState(false);
+
+  const baseStationList = useMemo(
+    () => Array.from(state.stations.values()),
+    [state.stations],
+  );
+
+  const refreshUserLocation = useCallback(async (): Promise<LocationData | null> => {
+    setLocationLoading(true);
+    setLocationDenied(false);
+    try {
+      const location = await locationService.getCurrentLocationAsync();
+      if (!location) {
+        setLocationDenied(true);
+        setUserLocation(null);
+        return null;
+      }
+      setUserLocation(location);
+      return location;
+    } finally {
+      setLocationLoading(false);
+    }
+  }, []);
+
+  const handleSortChange = useCallback(
+    (nextKey: StationSortKey) => {
+      setSortKey(nextKey);
+      if (nextKey === 'autoRoute') {
+        void refreshUserLocation();
+      }
+    },
+    [refreshUserLocation],
+  );
+
+  const autoRoutePlan = useMemo(() => {
+    if (sortKey !== 'autoRoute' || !userLocation) {
+      return null;
+    }
+    return buildAutoRouteFromLocation(baseStationList, userLocation);
+  }, [sortKey, userLocation, baseStationList]);
+
+  const routeLegByStationId = useMemo(() => {
+    if (!autoRoutePlan) {
+      return new Map<number, AutoRouteLeg>();
+    }
+    return new Map(autoRoutePlan.legs.map((leg) => [leg.stationId, leg]));
+  }, [autoRoutePlan]);
+
+  const stationList = useMemo(() => {
+    if (sortKey === 'autoRoute') {
+      return autoRoutePlan?.stations ?? sortStationDemands(baseStationList, 'demand');
+    }
+    return sortStationDemands(baseStationList, sortKey);
+  }, [baseStationList, sortKey, autoRoutePlan]);
 
   // サンプル駅ID（実装時に API から取得）
   // 1-10: 駅, 101-106: ホテル (MOCK_DATAに合わせたID)
@@ -214,21 +282,26 @@ export const StationDemandScreen: React.FC = () => {
   const onRefresh = useCallback(async () => {
     setRefreshing(true);
     try {
+      if (sortKey === 'autoRoute') {
+        await refreshUserLocation();
+      }
       await fetchMultipleStations(SAMPLE_STATION_IDS);
     } finally {
       setRefreshing(false);
     }
-  }, [fetchMultipleStations]);
+  }, [fetchMultipleStations, sortKey, refreshUserLocation]);
 
   /**
    * 駅リストのレンダリング
    */
   const renderStationCard: ListRenderItem<StationDemand> = useCallback(
-    ({ item }) => {
+    ({ item, index }) => {
       const hasFareWaveform = FARE_WAVEFORM_SUPPORTED_STATION_IDS.has(item.stationId);
       return (
         <StationCard
           station={item}
+          routeIndex={sortKey === 'autoRoute' ? index + 1 : undefined}
+          routeLeg={routeLegByStationId.get(item.stationId)}
           showFareWaveformHint={hasFareWaveform}
           onPress={
             hasFareWaveform
@@ -241,14 +314,13 @@ export const StationDemandScreen: React.FC = () => {
         />
       );
     },
-    [router],
+    [router, sortKey, routeLegByStationId],
   );
 
-  // 駅データを配列に変換（FlatList 用）
-  const stationList = useMemo(() => Array.from(state.stations.values()), [state.stations]);
+  // FlatList 用（上で stationList を算出済み）
 
   return (
-    <View style={styles.container}>
+    <SafeAreaView style={styles.container} edges={['top', 'left', 'right']}>
       <View style={styles.header}>
         <Text style={styles.title}>駅需要予測</Text>
         {state.isOnline ? (
@@ -257,6 +329,54 @@ export const StationDemandScreen: React.FC = () => {
           <Text style={styles.statusOffline}>● オフライン</Text>
         )}
       </View>
+
+      {stationList.length > 0 && (
+        <View style={styles.sortBar}>
+          <Text style={styles.sortLabel}>並び替え</Text>
+          <View style={styles.sortChips}>
+            {STATION_SORT_KEYS.map((key) => {
+              const selected = sortKey === key;
+              return (
+                <Pressable
+                  key={key}
+                  style={[styles.sortChip, selected && styles.sortChipSelected]}
+                  onPress={() => handleSortChange(key)}
+                  accessibilityRole="button"
+                  accessibilityState={{ selected }}
+                >
+                  <Text
+                    style={[
+                      styles.sortChipText,
+                      selected && styles.sortChipTextSelected,
+                    ]}
+                  >
+                    {STATION_SORT_LABELS[key]}
+                  </Text>
+                </Pressable>
+              );
+            })}
+          </View>
+        </View>
+      )}
+
+      {sortKey === 'autoRoute' && (
+        <View style={styles.autoRouteHint}>
+          {locationLoading ? (
+            <View style={styles.autoRouteHintRow}>
+              <ActivityIndicator size="small" color="#3498DB" />
+              <Text style={styles.autoRouteHintText}>現在地を取得中…</Text>
+            </View>
+          ) : locationDenied || !userLocation ? (
+            <Text style={styles.autoRouteHintWarn}>
+              位置情報を許可すると、現在地から近い順に並べます
+            </Text>
+          ) : (
+            <Text style={styles.autoRouteHintText}>
+              現在地から近い順（タクシー想定 {URBAN_TAXI_SPEED_KMH}km/h）
+            </Text>
+          )}
+        </View>
+      )}
 
       {state.error && (
         <StatusMessage
@@ -293,7 +413,7 @@ export const StationDemandScreen: React.FC = () => {
           }
         />
       )}
-    </View>
+    </SafeAreaView>
   );
 };
 
@@ -310,7 +430,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     paddingHorizontal: 16,
-    paddingTop: 16,
+    paddingTop: 12,
     paddingBottom: 12,
     backgroundColor: '#FFFFFF',
     borderBottomWidth: 1,
@@ -329,6 +449,75 @@ const styles = StyleSheet.create({
   statusOffline: {
     fontSize: 14,
     color: '#E74C3C',
+    fontWeight: '600',
+  },
+  sortBar: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    paddingHorizontal: 16,
+    paddingVertical: 8,
+    backgroundColor: '#FFFFFF',
+    borderBottomWidth: 1,
+    borderBottomColor: '#E0E0E0',
+  },
+  sortLabel: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: '#7F8C8D',
+  },
+  sortChips: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 6,
+    flex: 1,
+  },
+  sortChip: {
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+    borderRadius: 14,
+    backgroundColor: '#ECF0F1',
+    borderWidth: 1,
+    borderColor: '#ECF0F1',
+  },
+  sortChipSelected: {
+    backgroundColor: '#3498DB',
+    borderColor: '#3498DB',
+  },
+  sortChipText: {
+    fontSize: 12,
+    color: '#2C3E50',
+    fontWeight: '600',
+  },
+  sortChipTextSelected: {
+    color: '#FFFFFF',
+  },
+  autoRouteHint: {
+    paddingHorizontal: 16,
+    paddingVertical: 6,
+    backgroundColor: '#EBF5FB',
+    borderBottomWidth: 1,
+    borderBottomColor: '#D6EAF8',
+  },
+  autoRouteHintText: {
+    fontSize: 11,
+    color: '#1B4965',
+    fontWeight: '500',
+  },
+  autoRouteHintRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  autoRouteHintWarn: {
+    fontSize: 11,
+    color: '#C0392B',
+    fontWeight: '500',
+  },
+  routeEtaText: {
+    marginTop: 4,
+    fontSize: 12,
+    color: '#2980B9',
     fontWeight: '600',
   },
   centerContainer: {
@@ -376,6 +565,26 @@ const styles = StyleSheet.create({
   },
   fareHintIcon: {
     marginRight: 6,
+  },
+  stationNameRow: {
+    flex: 1,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  routeBadge: {
+    minWidth: 22,
+    height: 22,
+    borderRadius: 11,
+    backgroundColor: '#3498DB',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 6,
+  },
+  routeBadgeText: {
+    fontSize: 11,
+    fontWeight: '700',
+    color: '#FFFFFF',
   },
   stationName: {
     fontSize: 18,

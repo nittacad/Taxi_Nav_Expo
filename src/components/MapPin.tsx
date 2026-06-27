@@ -1,6 +1,7 @@
 import React from 'react';
-import { View, Text, StyleSheet, Platform, Linking, Alert } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import { Marker, Callout, LatLng } from 'react-native-maps';
+import { openMapsNavigation } from '@/utils/openMapsNavigation';
 
 export interface MapPinProps {
   coordinate: LatLng;
@@ -19,26 +20,8 @@ export const MapPin: React.FC<MapPinProps> = ({
   facilityType = 'station',
   onPress,
 }) => {
-  const handleCalloutPress = async () => {
-    // ディープリンクで本家Googleマップ（またはAppleマップ）のナビを起動
-    const destination = `${coordinate.latitude},${coordinate.longitude}`;
-    const googleMapsUrl = Platform.select({
-      ios: `comgooglemaps://?daddr=${destination}&directionsmode=driving`,
-      android: `google.navigation:q=${destination}&mode=d`,
-    }) || '';
-    const appleMapsUrl = `http://maps.apple.com/?daddr=${destination}&dirflg=d`;
-
-    try {
-      const canOpenGoogleMaps = await Linking.canOpenURL(googleMapsUrl);
-      if (canOpenGoogleMaps) {
-        await Linking.openURL(googleMapsUrl);
-      } else {
-        // Googleマップがない場合は標準のAppleマップで代替
-        await Linking.openURL(appleMapsUrl);
-      }
-    } catch (error) {
-      Alert.alert('エラー', 'マップアプリを起動できませんでした。');
-    }
+  const handleCalloutPress = () => {
+    void openMapsNavigation(coordinate, title);
   };
 
   const isHotel = facilityType === 'hotel';

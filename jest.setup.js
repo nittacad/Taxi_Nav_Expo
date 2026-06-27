@@ -36,3 +36,18 @@ jest.mock('@expo/vector-icons', () => {
     MaterialIcons: (props: any) => React.createElement(View, props),
   };
 });
+
+const mockSafeAreaInsets = { top: 47, right: 0, bottom: 34, left: 0 };
+
+jest.mock('react-native-safe-area-context', () => {
+  const React = require('react');
+  const { View } = require('react-native');
+  return {
+    SafeAreaProvider: ({ children }: { children: React.ReactNode }) => <>{children}</>,
+    SafeAreaView: ({ children, ...props }: { children: React.ReactNode }) => (
+      <View {...props}>{children}</View>
+    ),
+    useSafeAreaInsets: () => mockSafeAreaInsets,
+    useSafeAreaFrame: () => ({ x: 0, y: 0, width: 390, height: 844 }),
+  };
+});

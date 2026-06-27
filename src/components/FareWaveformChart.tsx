@@ -7,15 +7,12 @@ import React, { useMemo } from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import Svg, { Line, Polyline, Rect, Text as SvgText, G, Circle } from 'react-native-svg';
 
-import { JR_BASE_FARE } from '@/data/tokyoStationFareMock';
+import { JR_BASE_FARE, seriesMax } from '@/data/fareWaveformEngine';
 import {
   AirportArrivalHighlight,
   ExitFareWaveformSeries,
   FareWaveformLayerVisibility,
   OverlayMode,
-  EXIT_ID_TO_LAYER_KEY,
-  AIRPORT_ORIGIN_ORDER,
-  AIRPORT_ORIGIN_SHORT_LABELS,
 } from '@/types/fareWaveform';
 
 interface FareWaveformChartProps {
@@ -41,8 +38,7 @@ function isExitVisible(
   exitId: string,
   visibility: FareWaveformLayerVisibility,
 ): boolean {
-  const key = EXIT_ID_TO_LAYER_KEY[exitId as keyof typeof EXIT_ID_TO_LAYER_KEY];
-  return key ? visibility[key] : false;
+  return visibility[exitId] ?? true;
 }
 
 function buildPolylinePoints(
@@ -106,22 +102,35 @@ export const FareWaveformChart: React.FC<FareWaveformChartProps> = ({
     overlayMode === 'trainCount' ? trainCountByMinute : totalCapacityByMinute;
 
   const fareMax = useMemo(() => {
-    const peakValues = visibleExits.flatMap((exit) => exit.fareByMinute);
-    if (peakValues.length === 0) {
+    if (visibleExits.length === 0) {
       return Math.max(JR_BASE_FARE, 1000);
     }
-    return Math.max(...peakValues, JR_BASE_FARE);
+    let max = JR_BASE_FARE;
+    for (const exit of visibleExits) {
+      max = seriesMax(exit.fareByMinute, max);
+    }
+    return max;
   }, [visibleExits]);
 
   const overlayMax = useMemo(() => {
     if (!overlayActive) {
       return 1;
     }
-    return Math.max(...overlayData, 1);
+    return seriesMax(overlayData, 1);
   }, [overlayActive, overlayData]);
 
   const labelStep =
-    pxPerMinute >= 14 ? 5 : pxPerMinute >= 10 ? 10 : pxPerMinute >= 6 ? 15 : 20;
+    timeLabels.length > 480
+      ? 60
+      : timeLabels.length > 240
+        ? 30
+        : pxPerMinute >= 14
+          ? 5
+          : pxPerMinute >= 10
+            ? 10
+            : pxPerMinute >= 6
+              ? 15
+              : 20;
 
   const fareTicks = useMemo(
     () => [0, 0.25, 0.5, 0.75, 1].map((t) => Math.round(fareMax * t)),
@@ -339,37 +348,6 @@ export const FareWaveformChart: React.FC<FareWaveformChartProps> = ({
           })}
         </Svg>
       </ScrollView>
-
-      {airportHighlights.length > 0 && (
-        <View style={styles.airportLegend}>
-          {AIRPORT_ORIGIN_ORDER.filter((origin) =>
-            airportHighlights.some((h) => h.origin === origin),
-          ).map((origin) => {
-            const markerColors = [
-              ...new Set(
-                airportHighlights
-                  .filter((h) => h.origin === origin)
-                  .map((h) => h.markerColor),
-              ),
-            ];
-            return (
-              <View key={origin} style={styles.airportLegendItem}>
-                <View style={styles.airportDotRow}>
-                  {markerColors.map((color) => (
-                    <View
-                      key={color}
-                      style={[styles.airportDot, { backgroundColor: color }]}
-                    />
-                  ))}
-                </View>
-                <Text style={styles.airportLegendText}>
-                  {AIRPORT_ORIGIN_SHORT_LABELS[origin]}
-                </Text>
-              </View>
-            );
-          })}
-        </View>
-      )}
     </View>
   );
 };
@@ -382,32 +360,6 @@ const styles = StyleSheet.create({
     borderRadius: 6,
     backgroundColor: '#FFFFFF',
     overflow: 'hidden',
-  },
-  airportLegend: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    gap: 16,
-    paddingVertical: 6,
-    borderTopWidth: 1,
-    borderTopColor: '#ECF0F1',
-  },
-  airportLegendItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 6,
-  },
-  airportDotRow: {
-    flexDirection: 'row',
-    gap: 3,
-  },
-  airportDot: {
-    width: 8,
-    height: 8,
-    borderRadius: 4,
-  },
-  airportLegendText: {
-    fontSize: 11,
-    color: '#7F8C8D',
   },
 });
 

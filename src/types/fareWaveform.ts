@@ -12,16 +12,15 @@ export type LegacyDayCategory =
   | 'sunday'
   | 'holiday';
 
-export type TimePreset = 'peak' | 'peak_narrow' | 'evening';
+/** 始発〜終電（1日）または 2 時間スロット（slot_分オフセット） */
+export type TimePreset = 'full_day' | `slot_${number}` | string;
+
+export const DEFAULT_TIME_PRESET: TimePreset = 'slot_1020';
 
 export type OverlayMode = 'off' | 'capacity' | 'trainCount';
 
-export type ExitId =
-  | 'yaesu'
-  | 'nihonbashi'
-  | 'maru-north'
-  | 'maru-south'
-  | 'shinkansen';
+/** 駅ごとに異なる出口 ID（スラッグ） */
+export type ExitId = string;
 
 export type AirportOrigin = 'narita' | 'haneda';
 
@@ -29,7 +28,9 @@ export type AirportOrigin = 'narita' | 'haneda';
 export type AirportAccessLineKey =
   | 'naritaExpress'
   | 'keikyuAirport'
-  | 'hanedaMonorail';
+  | 'hanedaMonorail'
+  | 'keiseiSkyliner'
+  | 'keiseiSkyAccess';
 
 export const AIRPORT_ACCESS_LINE_META: Record<
   AirportAccessLineKey,
@@ -53,6 +54,16 @@ export const AIRPORT_ACCESS_LINE_META: Record<
     color: '#0B70B8',
     shortLabel: 'モノレ',
     bannerLabel: '羽田 モノレール',
+  },
+  keiseiSkyliner: {
+    color: '#005AAA',
+    shortLabel: 'スカイ',
+    bannerLabel: '成田 スカイライナー',
+  },
+  keiseiSkyAccess: {
+    color: '#EC7B02',
+    shortLabel: 'アクセス',
+    bannerLabel: '成田 スカイアクセス',
   },
 };
 
@@ -123,14 +134,15 @@ export interface StationFareWaveformData {
   stats: StationFareWaveformStats;
 }
 
-export interface FareWaveformLayerVisibility {
-  yaesu: boolean;
-  nihonbashi: boolean;
-  maruNorth: boolean;
-  maruSouth: boolean;
-  shinkansen: boolean;
+export type FareWaveformLayerVisibility = Record<string, boolean>;
+
+export function createDefaultLayerVisibility(
+  exits: readonly { exitId: string }[],
+): FareWaveformLayerVisibility {
+  return Object.fromEntries(exits.map((exit) => [exit.exitId, true]));
 }
 
+/** @deprecated createDefaultLayerVisibility を使用 */
 export const DEFAULT_LAYER_VISIBILITY: FareWaveformLayerVisibility = {
   yaesu: true,
   nihonbashi: true,
@@ -139,10 +151,8 @@ export const DEFAULT_LAYER_VISIBILITY: FareWaveformLayerVisibility = {
   shinkansen: true,
 };
 
-export const EXIT_ID_TO_LAYER_KEY: Record<
-  ExitId,
-  keyof FareWaveformLayerVisibility
-> = {
+/** @deprecated exitId をそのまま layerVisibility のキーに使用 */
+export const EXIT_ID_TO_LAYER_KEY: Record<string, string> = {
   yaesu: 'yaesu',
   nihonbashi: 'nihonbashi',
   'maru-north': 'maruNorth',
@@ -155,25 +165,41 @@ export const DAY_CATEGORY_LABELS: Record<DayCategory, string> = {
   weekend_holiday: '土日祝',
 };
 
-export const TIME_PRESET_LABELS: Record<TimePreset, string> = {
-  peak: '17:00–19:00（2時間・高密度）',
-  peak_narrow: '17:30–18:30（1時間）',
-  evening: '18:00–20:00（2時間）',
-};
-
 export const OVERLAY_MODE_LABELS: Record<OverlayMode, string> = {
   off: 'オーバーレイなし',
   capacity: '収容人数',
   trainCount: '到着本数/分',
 };
 
+/** 凡例パネル内の短縮ラベル */
+export const OVERLAY_MODE_SHORT_LABELS: Record<OverlayMode, string> = {
+  off: 'なし',
+  capacity: '収容',
+  trainCount: '本数',
+};
+
+export interface ExitPeakSummary {
+  exitId: ExitId;
+  exitName: string;
+  color: string;
+  peakFare: number;
+  peakTime: string;
+}
+
 export const DEFAULT_ZOOM_PX_PER_MINUTE = 8;
 
-export const ZOOM_LEVELS = [6, 8, 12, 16] as const;
+/** 1日表示時の初期ズーム（横スクロール量を抑える） */
+export const FULL_DAY_DEFAULT_ZOOM_PX_PER_MINUTE = 4;
+
+export const ZOOM_LEVELS = [4, 6, 8, 12, 16] as const;
 
 export type ZoomLevel = (typeof ZOOM_LEVELS)[number];
 
-export const FARE_WAVEFORM_SUPPORTED_STATION_IDS: ReadonlySet<number> = new Set([1]);
+export const FARE_WAVEFORM_SUPPORTED_STATION_IDS: ReadonlySet<number> = new Set([
+  1, // 東京
+  3, // 品川
+  6, // 上野
+]);
 
 export function resolveDayCategory(value: string): DayCategory {
   if (value === 'weekday') {
@@ -184,14 +210,24 @@ export function resolveDayCategory(value: string): DayCategory {
 
 export function resolveTimePreset(value: string): TimePreset {
   const legacy: Record<string, TimePreset> = {
-    full: 'peak',
-    morning: 'peak_narrow',
+    full: 'full_day',
+    peak: DEFAULT_TIME_PRESET,
+    peak_narrow: DEFAULT_TIME_PRESET,
+    evening: 'slot_1080',
+    morning: DEFAULT_TIME_PRESET,
   };
   const mapped = legacy[value] ?? value;
-  if (mapped === 'peak' || mapped === 'peak_narrow' || mapped === 'evening') {
+  if (mapped === 'full_day') {
+    return 'full_day';
+  }
+  if (mapped.startsWith('slot_')) {
     return mapped;
   }
-  return 'peak';
+  return DEFAULT_TIME_PRESET;
+}
+
+export function isTwoHourTimePreset(preset: TimePreset): boolean {
+  return typeof preset === 'string' && preset.startsWith('slot_');
 }
 
 export function zoomStep(current: ZoomLevel, direction: -1 | 1): ZoomLevel {

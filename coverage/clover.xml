@@ -1,0 +1,711 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1782256202567" clover="3.2.0">
+  <project timestamp="1782256202567" name="All files">
+    <metrics statements="606" coveredstatements="338" conditionals="308" coveredconditionals="130" methods="164" coveredmethods="66" elements="1078" coveredelements="534" complexity="0" loc="606" ncloc="606" packages="7" files="26" classes="26"/>
+    <package name="app">
+      <metrics statements="9" coveredstatements="0" conditionals="2" coveredconditionals="0" methods="7" coveredmethods="0"/>
+      <file name="_layout.tsx" path="C:\Users\nitta\Claude\Projects\【ナビ】 特定情報誘導型・高性能ナビ（Googleマップ連携）\Taxi_Nav_Expo\src\app\_layout.tsx">
+        <metrics statements="6" coveredstatements="0" conditionals="2" coveredconditionals="0" methods="4" coveredmethods="0"/>
+        <line num="11" count="0" type="stmt"/>
+        <line num="12" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="14" count="0" type="stmt"/>
+        <line num="28" count="0" type="stmt"/>
+        <line num="35" count="0" type="stmt"/>
+        <line num="42" count="0" type="stmt"/>
+      </file>
+      <file name="explore.tsx" path="C:\Users\nitta\Claude\Projects\【ナビ】 特定情報誘導型・高性能ナビ（Googleマップ連携）\Taxi_Nav_Expo\src\app\explore.tsx">
+        <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <line num="4" count="0" type="stmt"/>
+      </file>
+      <file name="index.tsx" path="C:\Users\nitta\Claude\Projects\【ナビ】 特定情報誘導型・高性能ナビ（Googleマップ連携）\Taxi_Nav_Expo\src\app\index.tsx">
+        <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <line num="4" count="0" type="stmt"/>
+      </file>
+      <file name="settings.tsx" path="C:\Users\nitta\Claude\Projects\【ナビ】 特定情報誘導型・高性能ナビ（Googleマップ連携）\Taxi_Nav_Expo\src\app\settings.tsx">
+        <metrics statements="1" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <line num="4" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="components">
+      <metrics statements="149" coveredstatements="77" conditionals="72" coveredconditionals="33" methods="38" coveredmethods="16"/>
+      <file name="MapPin.tsx" path="C:\Users\nitta\Claude\Projects\【ナビ】 特定情報誘導型・高性能ナビ（Googleマップ連携）\Taxi_Nav_Expo\src\components\MapPin.tsx">
+        <metrics statements="15" coveredstatements="6" conditionals="11" coveredconditionals="7" methods="2" coveredmethods="1"/>
+        <line num="14" count="2" type="stmt"/>
+        <line num="22" count="17" type="stmt"/>
+        <line num="24" count="0" type="stmt"/>
+        <line num="25" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="29" count="0" type="stmt"/>
+        <line num="31" count="0" type="stmt"/>
+        <line num="32" count="0" type="stmt"/>
+        <line num="33" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="34" count="0" type="stmt"/>
+        <line num="37" count="0" type="stmt"/>
+        <line num="40" count="0" type="stmt"/>
+        <line num="44" count="17" type="stmt"/>
+        <line num="45" count="17" type="cond" truecount="2" falsecount="0"/>
+        <line num="47" count="17" type="stmt"/>
+        <line num="65" count="2" type="stmt"/>
+      </file>
+      <file name="PinDropFAB.tsx" path="C:\Users\nitta\Claude\Projects\【ナビ】 特定情報誘導型・高性能ナビ（Googleマップ連携）\Taxi_Nav_Expo\src\components\PinDropFAB.tsx">
+        <metrics statements="80" coveredstatements="46" conditionals="20" coveredconditionals="2" methods="18" coveredmethods="6"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="14" count="1" type="stmt"/>
+        <line num="15" count="1" type="stmt"/>
+        <line num="16" count="1" type="stmt"/>
+        <line num="23" count="1" type="stmt"/>
+        <line num="25" count="1" type="stmt"/>
+        <line num="26" count="1" type="stmt"/>
+        <line num="29" count="1" type="stmt"/>
+        <line num="30" count="1" type="stmt"/>
+        <line num="33" count="1" type="stmt"/>
+        <line num="34" count="1" type="stmt"/>
+        <line num="35" count="1" type="stmt"/>
+        <line num="38" count="1" type="stmt"/>
+        <line num="39" count="1" type="stmt"/>
+        <line num="41" count="1" type="stmt"/>
+        <line num="42" count="0" type="stmt"/>
+        <line num="43" count="0" type="stmt"/>
+        <line num="44" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="47" count="1" type="stmt"/>
+        <line num="48" count="0" type="stmt"/>
+        <line num="49" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="53" count="1" type="stmt"/>
+        <line num="55" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="56" count="0" type="stmt"/>
+        <line num="57" count="0" type="stmt"/>
+        <line num="61" count="0" type="stmt"/>
+        <line num="62" count="0" type="stmt"/>
+        <line num="66" count="0" type="stmt"/>
+        <line num="67" count="0" type="stmt"/>
+        <line num="68" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="69" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="70" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="71" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="73" count="0" type="stmt"/>
+        <line num="74" count="0" type="stmt"/>
+        <line num="78" count="1" type="stmt"/>
+        <line num="80" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="81" count="0" type="stmt"/>
+        <line num="82" count="0" type="stmt"/>
+        <line num="83" count="0" type="stmt"/>
+        <line num="86" count="0" type="stmt"/>
+        <line num="87" count="0" type="stmt"/>
+        <line num="90" count="0" type="stmt"/>
+        <line num="92" count="0" type="stmt"/>
+        <line num="93" count="0" type="stmt"/>
+        <line num="96" count="0" type="stmt"/>
+        <line num="97" count="0" type="stmt"/>
+        <line num="100" count="0" type="stmt"/>
+        <line num="104" count="1" type="stmt"/>
+        <line num="107" count="0" type="stmt"/>
+        <line num="115" count="1" type="stmt"/>
+        <line num="121" count="1" type="stmt"/>
+        <line num="122" count="2" type="stmt"/>
+        <line num="130" count="1" type="stmt"/>
+        <line num="131" count="2" type="stmt"/>
+        <line num="145" count="1" type="stmt"/>
+        <line num="146" count="1" type="stmt"/>
+        <line num="148" count="1" type="stmt"/>
+        <line num="149" count="2" type="stmt"/>
+        <line num="150" count="2" type="stmt"/>
+        <line num="151" count="2" type="stmt"/>
+        <line num="152" count="2" type="stmt"/>
+        <line num="153" count="2" type="stmt"/>
+        <line num="160" count="1" type="stmt"/>
+        <line num="161" count="2" type="stmt"/>
+        <line num="162" count="2" type="stmt"/>
+        <line num="163" count="2" type="stmt"/>
+        <line num="164" count="2" type="stmt"/>
+        <line num="165" count="2" type="stmt"/>
+        <line num="172" count="1" type="stmt"/>
+        <line num="173" count="2" type="stmt"/>
+        <line num="174" count="2" type="stmt"/>
+        <line num="175" count="2" type="stmt"/>
+        <line num="176" count="2" type="stmt"/>
+        <line num="177" count="2" type="stmt"/>
+        <line num="184" count="1" type="stmt"/>
+        <line num="198" count="0" type="stmt"/>
+        <line num="204" count="0" type="stmt"/>
+        <line num="210" count="0" type="stmt"/>
+        <line num="236" count="1" type="stmt"/>
+      </file>
+      <file name="Timer.tsx" path="C:\Users\nitta\Claude\Projects\【ナビ】 特定情報誘導型・高性能ナビ（Googleマップ連携）\Taxi_Nav_Expo\src\components\Timer.tsx">
+        <metrics statements="20" coveredstatements="20" conditionals="8" coveredconditionals="6" methods="7" coveredmethods="7"/>
+        <line num="9" count="2" type="stmt"/>
+        <line num="10" count="6" type="stmt"/>
+        <line num="12" count="6" type="stmt"/>
+        <line num="13" count="6" type="cond" truecount="2" falsecount="0"/>
+        <line num="14" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="15" count="1" type="stmt"/>
+        <line num="17" count="1" type="stmt"/>
+        <line num="20" count="5" type="stmt"/>
+        <line num="21" count="3" type="stmt"/>
+        <line num="24" count="5" type="stmt"/>
+        <line num="28" count="6" type="stmt"/>
+        <line num="29" count="6" type="cond" truecount="2" falsecount="0"/>
+        <line num="30" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="31" count="2" type="stmt"/>
+        <line num="34" count="6" type="stmt"/>
+        <line num="35" count="6" type="stmt"/>
+        <line num="36" count="6" type="stmt"/>
+        <line num="37" count="6" type="stmt"/>
+        <line num="40" count="6" type="stmt"/>
+        <line num="47" count="2" type="stmt"/>
+      </file>
+      <file name="animated-icon.tsx" path="C:\Users\nitta\Claude\Projects\【ナビ】 特定情報誘導型・高性能ナビ（Googleマップ連携）\Taxi_Nav_Expo\src\components\animated-icon.tsx">
+        <metrics statements="13" coveredstatements="0" conditionals="4" coveredconditionals="0" methods="3" coveredmethods="0"/>
+        <line num="7" count="0" type="stmt"/>
+        <line num="8" count="0" type="stmt"/>
+        <line num="11" count="0" type="stmt"/>
+        <line num="13" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="15" count="0" type="stmt"/>
+        <line num="34" count="0" type="stmt"/>
+        <line num="38" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="39" count="0" type="stmt"/>
+        <line num="47" count="0" type="stmt"/>
+        <line num="57" count="0" type="stmt"/>
+        <line num="74" count="0" type="stmt"/>
+        <line num="84" count="0" type="stmt"/>
+        <line num="98" count="0" type="stmt"/>
+      </file>
+      <file name="animated-icon.web.tsx" path="C:\Users\nitta\Claude\Projects\【ナビ】 特定情報誘導型・高性能ナビ（Googleマップ連携）\Taxi_Nav_Expo\src\components\animated-icon.web.tsx">
+        <metrics statements="7" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="0"/>
+        <line num="6" count="0" type="stmt"/>
+        <line num="9" count="0" type="stmt"/>
+        <line num="12" count="0" type="stmt"/>
+        <line num="26" count="0" type="stmt"/>
+        <line num="42" count="0" type="stmt"/>
+        <line num="58" count="0" type="stmt"/>
+        <line num="75" count="0" type="stmt"/>
+      </file>
+      <file name="external-link.tsx" path="C:\Users\nitta\Claude\Projects\【ナビ】 特定情報誘導型・高性能ナビ（Googleマップ連携）\Taxi_Nav_Expo\src\components\external-link.tsx">
+        <metrics statements="4" coveredstatements="0" conditionals="2" coveredconditionals="0" methods="2" coveredmethods="0"/>
+        <line num="8" count="0" type="stmt"/>
+        <line num="14" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="16" count="0" type="stmt"/>
+        <line num="18" count="0" type="stmt"/>
+      </file>
+      <file name="hint-row.tsx" path="C:\Users\nitta\Claude\Projects\【ナビ】 特定情報誘導型・高性能ナビ（Googleマップ連携）\Taxi_Nav_Expo\src\components\hint-row.tsx">
+        <metrics statements="2" coveredstatements="0" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <line num="15" count="0" type="stmt"/>
+        <line num="25" count="0" type="stmt"/>
+      </file>
+      <file name="themed-text.tsx" path="C:\Users\nitta\Claude\Projects\【ナビ】 特定情報誘導型・高性能ナビ（Googleマップ連携）\Taxi_Nav_Expo\src\components\themed-text.tsx">
+        <metrics statements="3" coveredstatements="3" conditionals="21" coveredconditionals="16" methods="1" coveredmethods="1"/>
+        <line num="12" count="27" type="stmt"/>
+        <line num="14" count="27" type="stmt"/>
+        <line num="33" count="1" type="stmt"/>
+      </file>
+      <file name="themed-view.tsx" path="C:\Users\nitta\Claude\Projects\【ナビ】 特定情報誘導型・高性能ナビ（Googleマップ連携）\Taxi_Nav_Expo\src\components\themed-view.tsx">
+        <metrics statements="2" coveredstatements="2" conditionals="2" coveredconditionals="2" methods="1" coveredmethods="1"/>
+        <line num="13" count="9" type="stmt"/>
+        <line num="15" count="9" type="cond" truecount="2" falsecount="0"/>
+      </file>
+      <file name="web-badge.tsx" path="C:\Users\nitta\Claude\Projects\【ナビ】 特定情報誘導型・高性能ナビ（Googleマップ連携）\Taxi_Nav_Expo\src\components\web-badge.tsx">
+        <metrics statements="3" coveredstatements="0" conditionals="2" coveredconditionals="0" methods="1" coveredmethods="0"/>
+        <line num="11" count="0" type="stmt"/>
+        <line num="13" count="0" type="stmt"/>
+        <line num="30" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="components.ui">
+      <metrics statements="6" coveredstatements="0" conditionals="6" coveredconditionals="0" methods="4" coveredmethods="0"/>
+      <file name="collapsible.tsx" path="C:\Users\nitta\Claude\Projects\【ナビ】 特定情報誘導型・高性能ナビ（Googleマップ連携）\Taxi_Nav_Expo\src\components\ui\collapsible.tsx">
+        <metrics statements="6" coveredstatements="0" conditionals="6" coveredconditionals="0" methods="4" coveredmethods="0"/>
+        <line num="12" count="0" type="stmt"/>
+        <line num="13" count="0" type="stmt"/>
+        <line num="15" count="0" type="stmt"/>
+        <line num="18" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="19" count="0" type="stmt"/>
+        <line num="43" count="0" type="stmt"/>
+      </file>
+    </package>
+    <package name="hooks">
+      <metrics statements="10" coveredstatements="3" conditionals="6" coveredconditionals="2" methods="3" coveredmethods="1"/>
+      <file name="use-color-scheme.ts" path="C:\Users\nitta\Claude\Projects\【ナビ】 特定情報誘導型・高性能ナビ（Googleマップ連携）\Taxi_Nav_Expo\src\hooks\use-color-scheme.ts">
+        <metrics statements="0" coveredstatements="0" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+      </file>
+      <file name="use-color-scheme.web.ts" path="C:\Users\nitta\Claude\Projects\【ナビ】 特定情報誘導型・高性能ナビ（Googleマップ連携）\Taxi_Nav_Expo\src\hooks\use-color-scheme.web.ts">
+        <metrics statements="7" coveredstatements="0" conditionals="2" coveredconditionals="0" methods="2" coveredmethods="0"/>
+        <line num="8" count="0" type="stmt"/>
+        <line num="10" count="0" type="stmt"/>
+        <line num="11" count="0" type="stmt"/>
+        <line num="14" count="0" type="stmt"/>
+        <line num="16" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="17" count="0" type="stmt"/>
+        <line num="20" count="0" type="stmt"/>
+      </file>
+      <file name="use-theme.ts" path="C:\Users\nitta\Claude\Projects\【ナビ】 特定情報誘導型・高性能ナビ（Googleマップ連携）\Taxi_Nav_Expo\src\hooks\use-theme.ts">
+        <metrics statements="3" coveredstatements="3" conditionals="4" coveredconditionals="2" methods="1" coveredmethods="1"/>
+        <line num="10" count="36" type="stmt"/>
+        <line num="11" count="36" type="cond" truecount="2" falsecount="2"/>
+        <line num="13" count="36" type="stmt"/>
+      </file>
+    </package>
+    <package name="screens">
+      <metrics statements="173" coveredstatements="101" conditionals="94" coveredconditionals="42" methods="58" coveredmethods="23"/>
+      <file name="LoginScreen.tsx" path="C:\Users\nitta\Claude\Projects\【ナビ】 特定情報誘導型・高性能ナビ（Googleマップ連携）\Taxi_Nav_Expo\src\screens\LoginScreen.tsx">
+        <metrics statements="10" coveredstatements="10" conditionals="4" coveredconditionals="2" methods="2" coveredmethods="2"/>
+        <line num="17" count="1" type="stmt"/>
+        <line num="18" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="19" count="2" type="stmt"/>
+        <line num="21" count="2" type="stmt"/>
+        <line num="22" count="2" type="stmt"/>
+        <line num="24" count="2" type="stmt"/>
+        <line num="26" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="27" count="1" type="stmt"/>
+        <line num="31" count="2" type="stmt"/>
+        <line num="89" count="1" type="stmt"/>
+      </file>
+      <file name="MapScreen.tsx" path="C:\Users\nitta\Claude\Projects\【ナビ】 特定情報誘導型・高性能ナビ（Googleマップ連携）\Taxi_Nav_Expo\src\screens\MapScreen.tsx">
+        <metrics statements="101" coveredstatements="36" conditionals="62" coveredconditionals="18" methods="40" coveredmethods="6"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="21" count="1" type="stmt"/>
+        <line num="42" count="1" type="stmt"/>
+        <line num="43" count="0" type="stmt"/>
+        <line num="46" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="49" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="50" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="51" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="52" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="53" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="57" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="59" count="0" type="stmt"/>
+        <line num="62" count="1" type="stmt"/>
+        <line num="63" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="64" count="1" type="stmt"/>
+        <line num="66" count="1" type="stmt"/>
+        <line num="67" count="1" type="stmt"/>
+        <line num="69" count="1" type="stmt"/>
+        <line num="70" count="1" type="stmt"/>
+        <line num="73" count="1" type="stmt"/>
+        <line num="74" count="1" type="stmt"/>
+        <line num="75" count="1" type="stmt"/>
+        <line num="76" count="1" type="stmt"/>
+        <line num="77" count="1" type="stmt"/>
+        <line num="78" count="1" type="stmt"/>
+        <line num="81" count="1" type="stmt"/>
+        <line num="83" count="0" type="stmt"/>
+        <line num="84" count="0" type="stmt"/>
+        <line num="92" count="1" type="stmt"/>
+        <line num="94" count="1" type="stmt"/>
+        <line num="96" count="1" type="stmt"/>
+        <line num="97" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="98" count="0" type="stmt"/>
+        <line num="99" count="0" type="stmt"/>
+        <line num="100" count="0" type="stmt"/>
+        <line num="109" count="1" type="stmt"/>
+        <line num="110" count="0" type="stmt"/>
+        <line num="111" count="0" type="stmt"/>
+        <line num="115" count="1" type="stmt"/>
+        <line num="118" count="1" type="stmt"/>
+        <line num="119" count="0" type="cond" truecount="0" falsecount="4"/>
+        <line num="125" count="1" type="stmt"/>
+        <line num="126" count="1" type="stmt"/>
+        <line num="127" count="1" type="stmt"/>
+        <line num="133" count="1" type="stmt"/>
+        <line num="134" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="137" count="0" type="stmt"/>
+        <line num="138" count="0" type="stmt"/>
+        <line num="149" count="1" type="stmt"/>
+        <line num="150" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="152" count="0" type="stmt"/>
+        <line num="154" count="0" type="stmt"/>
+        <line num="157" count="0" type="stmt"/>
+        <line num="158" count="0" type="stmt"/>
+        <line num="171" count="0" type="stmt"/>
+        <line num="172" count="0" type="stmt"/>
+        <line num="173" count="0" type="stmt"/>
+        <line num="174" count="0" type="stmt"/>
+        <line num="175" count="0" type="stmt"/>
+        <line num="176" count="0" type="stmt"/>
+        <line num="181" count="0" type="stmt"/>
+        <line num="185" count="1" type="stmt"/>
+        <line num="186" count="0" type="stmt"/>
+        <line num="187" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="188" count="0" type="stmt"/>
+        <line num="195" count="0" type="stmt"/>
+        <line num="197" count="0" type="stmt"/>
+        <line num="198" count="0" type="stmt"/>
+        <line num="201" count="1" type="stmt"/>
+        <line num="203" count="0" type="stmt"/>
+        <line num="204" count="0" type="stmt"/>
+        <line num="205" count="0" type="stmt"/>
+        <line num="208" count="1" type="stmt"/>
+        <line num="210" count="0" type="stmt"/>
+        <line num="211" count="0" type="stmt"/>
+        <line num="214" count="1" type="stmt"/>
+        <line num="227" count="16" type="stmt"/>
+        <line num="239" count="0" type="stmt"/>
+        <line num="244" count="0" type="stmt"/>
+        <line num="245" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="249" count="0" type="stmt"/>
+        <line num="250" count="0" type="stmt"/>
+        <line num="251" count="0" type="stmt"/>
+        <line num="252" count="0" type="stmt"/>
+        <line num="253" count="0" type="stmt"/>
+        <line num="254" count="0" type="stmt"/>
+        <line num="279" count="0" type="stmt"/>
+        <line num="294" count="0" type="stmt"/>
+        <line num="297" count="0" type="stmt"/>
+        <line num="300" count="0" type="stmt"/>
+        <line num="303" count="0" type="stmt"/>
+        <line num="310" count="0" type="stmt"/>
+        <line num="314" count="0" type="stmt"/>
+        <line num="325" count="0" type="stmt"/>
+        <line num="328" count="0" type="stmt"/>
+        <line num="331" count="0" type="stmt"/>
+        <line num="340" count="0" type="stmt"/>
+        <line num="343" count="0" type="stmt"/>
+        <line num="346" count="0" type="stmt"/>
+        <line num="349" count="0" type="stmt"/>
+        <line num="371" count="1" type="stmt"/>
+      </file>
+      <file name="SettingsScreen.tsx" path="C:\Users\nitta\Claude\Projects\【ナビ】 特定情報誘導型・高性能ナビ（Googleマップ連携）\Taxi_Nav_Expo\src\screens\SettingsScreen.tsx">
+        <metrics statements="14" coveredstatements="14" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <line num="11" count="3" type="stmt"/>
+        <line num="12" count="3" type="stmt"/>
+        <line num="13" count="3" type="stmt"/>
+        <line num="14" count="3" type="stmt"/>
+        <line num="15" count="3" type="stmt"/>
+        <line num="16" count="3" type="stmt"/>
+        <line num="18" count="3" type="stmt"/>
+        <line num="19" count="2" type="stmt"/>
+        <line num="20" count="2" type="stmt"/>
+        <line num="28" count="1" type="stmt"/>
+        <line num="30" count="1" type="stmt"/>
+        <line num="31" count="1" type="stmt"/>
+        <line num="35" count="3" type="stmt"/>
+        <line num="104" count="1" type="stmt"/>
+      </file>
+      <file name="StationDemandScreen.tsx" path="C:\Users\nitta\Claude\Projects\【ナビ】 特定情報誘導型・高性能ナビ（Googleマップ連携）\Taxi_Nav_Expo\src\screens\StationDemandScreen.tsx">
+        <metrics statements="48" coveredstatements="41" conditionals="28" coveredconditionals="22" methods="14" coveredmethods="13"/>
+        <line num="24" count="1" type="stmt"/>
+        <line num="25" count="19" type="cond" truecount="2" falsecount="0"/>
+        <line num="26" count="12" type="cond" truecount="2" falsecount="0"/>
+        <line num="27" count="6" type="cond" truecount="1" falsecount="1"/>
+        <line num="28" count="6" type="stmt"/>
+        <line num="34" count="1" type="stmt"/>
+        <line num="35" count="19" type="cond" truecount="3" falsecount="1"/>
+        <line num="37" count="7" type="stmt"/>
+        <line num="39" count="6" type="stmt"/>
+        <line num="41" count="6" type="stmt"/>
+        <line num="43" count="0" type="stmt"/>
+        <line num="50" count="1" type="stmt"/>
+        <line num="51" count="19" type="cond" truecount="3" falsecount="1"/>
+        <line num="53" count="7" type="stmt"/>
+        <line num="55" count="6" type="stmt"/>
+        <line num="57" count="6" type="stmt"/>
+        <line num="59" count="0" type="stmt"/>
+        <line num="70" count="1" type="stmt"/>
+        <line num="71" count="19" type="stmt"/>
+        <line num="72" count="19" type="stmt"/>
+        <line num="74" count="19" type="stmt"/>
+        <line num="119" count="1" type="stmt"/>
+        <line num="120" count="13" type="stmt"/>
+        <line num="140" count="1" type="stmt"/>
+        <line num="141" count="29" type="stmt"/>
+        <line num="142" count="29" type="stmt"/>
+        <line num="146" count="29" type="stmt"/>
+        <line num="151" count="29" type="stmt"/>
+        <line num="153" count="10" type="stmt"/>
+        <line num="159" count="29" type="stmt"/>
+        <line num="160" count="10" type="stmt"/>
+        <line num="161" count="10" type="stmt"/>
+        <line num="162" count="10" type="stmt"/>
+        <line num="163" count="10" type="stmt"/>
+        <line num="165" count="0" type="stmt"/>
+        <line num="169" count="10" type="stmt"/>
+        <line num="170" count="10" type="stmt"/>
+        <line num="176" count="29" type="stmt"/>
+        <line num="177" count="0" type="stmt"/>
+        <line num="178" count="0" type="stmt"/>
+        <line num="179" count="0" type="stmt"/>
+        <line num="181" count="0" type="stmt"/>
+        <line num="188" count="29" type="stmt"/>
+        <line num="189" count="19" type="stmt"/>
+        <line num="193" count="29" type="stmt"/>
+        <line num="195" count="29" type="stmt"/>
+        <line num="230" count="26" type="stmt"/>
+        <line num="248" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="services">
+      <metrics statements="200" coveredstatements="121" conditionals="115" coveredconditionals="47" methods="45" coveredmethods="20"/>
+      <file name="DemandAPIClient.ts" path="C:\Users\nitta\Claude\Projects\【ナビ】 特定情報誘導型・高性能ナビ（Googleマップ連携）\Taxi_Nav_Expo\src\services\DemandAPIClient.ts">
+        <metrics statements="124" coveredstatements="53" conditionals="88" coveredconditionals="26" methods="32" coveredmethods="9"/>
+        <line num="21" count="3" type="stmt"/>
+        <line num="32" count="3" type="stmt"/>
+        <line num="34" count="3" type="stmt"/>
+        <line num="53" count="3" type="stmt"/>
+        <line num="54" count="48" type="stmt"/>
+        <line num="58" count="3" type="stmt"/>
+        <line num="84" count="3" type="stmt"/>
+        <line num="85" count="0" type="cond" truecount="0" falsecount="4"/>
+        <line num="91" count="3" type="stmt"/>
+        <line num="95" count="0" type="stmt"/>
+        <line num="99" count="0" type="stmt"/>
+        <line num="102" count="3" type="stmt"/>
+        <line num="103" count="3" type="stmt"/>
+        <line num="106" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="107" count="0" type="stmt"/>
+        <line num="109" count="0" type="stmt"/>
+        <line num="113" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="114" count="1" type="stmt"/>
+        <line num="116" count="0" type="stmt"/>
+        <line num="122" count="3" type="stmt"/>
+        <line num="123" count="1" type="stmt"/>
+        <line num="124" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="125" count="0" type="stmt"/>
+        <line num="127" count="1" type="cond" truecount="1" falsecount="2"/>
+        <line num="131" count="1" type="stmt"/>
+        <line num="132" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="133" count="1" type="stmt"/>
+        <line num="137" count="1" type="stmt"/>
+        <line num="138" count="1" type="cond" truecount="2" falsecount="0"/>
+        <line num="139" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="140" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="142" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="148" count="1" type="stmt"/>
+        <line num="149" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="156" count="0" type="stmt"/>
+        <line num="157" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="163" count="0" type="stmt"/>
+        <line num="166" count="1" type="stmt"/>
+        <line num="185" count="6" type="stmt"/>
+        <line num="188" count="6" type="stmt"/>
+        <line num="201" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="202" count="0" type="stmt"/>
+        <line num="203" count="0" type="stmt"/>
+        <line num="204" count="0" type="stmt"/>
+        <line num="205" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="206" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="207" count="0" type="stmt"/>
+        <line num="209" count="0" type="stmt"/>
+        <line num="215" count="3" type="stmt"/>
+        <line num="216" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="217" count="3" type="stmt"/>
+        <line num="218" count="3" type="stmt"/>
+        <line num="220" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="221" count="0" type="stmt"/>
+        <line num="228" count="2" type="stmt"/>
+        <line num="229" count="2" type="stmt"/>
+        <line num="231" count="1" type="stmt"/>
+        <line num="233" count="1" type="stmt"/>
+        <line num="246" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="247" count="0" type="stmt"/>
+        <line num="248" count="0" type="stmt"/>
+        <line num="249" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="250" count="0" type="stmt"/>
+        <line num="252" count="0" type="stmt"/>
+        <line num="257" count="0" type="stmt"/>
+        <line num="258" count="0" type="stmt"/>
+        <line num="259" count="0" type="stmt"/>
+        <line num="261" count="0" type="stmt"/>
+        <line num="262" count="0" type="stmt"/>
+        <line num="264" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="265" count="0" type="stmt"/>
+        <line num="272" count="0" type="stmt"/>
+        <line num="273" count="0" type="stmt"/>
+        <line num="275" count="0" type="stmt"/>
+        <line num="277" count="0" type="stmt"/>
+        <line num="293" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="294" count="0" type="stmt"/>
+        <line num="295" count="0" type="stmt"/>
+        <line num="296" count="0" type="stmt"/>
+        <line num="301" count="0" type="stmt"/>
+        <line num="302" count="0" type="stmt"/>
+        <line num="303" count="0" type="stmt"/>
+        <line num="304" count="0" type="stmt"/>
+        <line num="305" count="0" type="stmt"/>
+        <line num="306" count="0" type="stmt"/>
+        <line num="308" count="0" type="stmt"/>
+        <line num="309" count="0" type="stmt"/>
+        <line num="311" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="312" count="0" type="stmt"/>
+        <line num="316" count="0" type="stmt"/>
+        <line num="317" count="0" type="stmt"/>
+        <line num="319" count="0" type="stmt"/>
+        <line num="321" count="0" type="stmt"/>
+        <line num="329" count="3" type="stmt"/>
+        <line num="330" count="3" type="stmt"/>
+        <line num="331" count="0" type="stmt"/>
+        <line num="335" count="3" type="stmt"/>
+        <line num="342" count="3" type="stmt"/>
+        <line num="351" count="3" type="stmt"/>
+        <line num="353" count="3" type="stmt"/>
+        <line num="354" count="3" type="stmt"/>
+        <line num="355" count="3" type="stmt"/>
+        <line num="357" count="2" type="cond" truecount="4" falsecount="0"/>
+        <line num="358" count="1" type="stmt"/>
+        <line num="364" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="365" count="1" type="stmt"/>
+        <line num="367" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="368" count="0" type="stmt"/>
+        <line num="376" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="380" count="2" type="stmt"/>
+        <line num="383" count="0" type="stmt"/>
+        <line num="387" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="397" count="0" type="stmt"/>
+        <line num="419" count="0" type="stmt"/>
+        <line num="420" count="0" type="stmt"/>
+        <line num="421" count="0" type="stmt"/>
+        <line num="426" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="427" count="0" type="stmt"/>
+        <line num="430" count="0" type="stmt"/>
+        <line num="431" count="0" type="stmt"/>
+        <line num="433" count="0" type="stmt"/>
+        <line num="442" count="0" type="stmt"/>
+        <line num="449" count="0" type="stmt"/>
+        <line num="457" count="3" type="stmt"/>
+      </file>
+      <file name="LocationService.ts" path="C:\Users\nitta\Claude\Projects\【ナビ】 特定情報誘導型・高性能ナビ（Googleマップ連携）\Taxi_Nav_Expo\src\services\LocationService.ts">
+        <metrics statements="39" coveredstatements="34" conditionals="11" coveredconditionals="11" methods="6" coveredmethods="6"/>
+        <line num="9" count="2" type="stmt"/>
+        <line num="10" count="2" type="stmt"/>
+        <line num="11" count="2" type="stmt"/>
+        <line num="18" count="9" type="stmt"/>
+        <line num="19" count="9" type="stmt"/>
+        <line num="20" count="7" type="cond" truecount="2" falsecount="0"/>
+        <line num="21" count="2" type="stmt"/>
+        <line num="22" count="2" type="stmt"/>
+        <line num="24" count="5" type="stmt"/>
+        <line num="26" count="2" type="stmt"/>
+        <line num="27" count="2" type="stmt"/>
+        <line num="36" count="3" type="stmt"/>
+        <line num="37" count="3" type="stmt"/>
+        <line num="38" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="40" count="1" type="stmt"/>
+        <line num="44" count="1" type="stmt"/>
+        <line num="49" count="0" type="stmt"/>
+        <line num="50" count="0" type="stmt"/>
+        <line num="63" count="5" type="stmt"/>
+        <line num="64" count="5" type="cond" truecount="2" falsecount="0"/>
+        <line num="65" count="1" type="stmt"/>
+        <line num="66" count="1" type="stmt"/>
+        <line num="69" count="4" type="stmt"/>
+        <line num="70" count="4" type="cond" truecount="2" falsecount="0"/>
+        <line num="72" count="3" type="stmt"/>
+        <line num="74" count="3" type="stmt"/>
+        <line num="81" count="1" type="stmt"/>
+        <line num="88" count="3" type="stmt"/>
+        <line num="89" count="3" type="stmt"/>
+        <line num="91" count="0" type="stmt"/>
+        <line num="92" count="0" type="stmt"/>
+        <line num="93" count="0" type="stmt"/>
+        <line num="101" count="9" type="cond" truecount="2" falsecount="0"/>
+        <line num="102" count="3" type="stmt"/>
+        <line num="103" count="3" type="stmt"/>
+        <line num="105" count="9" type="stmt"/>
+        <line num="106" count="9" type="stmt"/>
+        <line num="113" count="3" type="stmt"/>
+        <line num="118" count="2" type="stmt"/>
+      </file>
+      <file name="NotificationEngine.ts" path="C:\Users\nitta\Claude\Projects\【ナビ】 特定情報誘導型・高性能ナビ（Googleマップ連携）\Taxi_Nav_Expo\src\services\NotificationEngine.ts">
+        <metrics statements="37" coveredstatements="34" conditionals="16" coveredconditionals="10" methods="7" coveredmethods="5"/>
+        <line num="5" count="1" type="stmt"/>
+        <line num="6" count="0" type="stmt"/>
+        <line num="19" count="1" type="stmt"/>
+        <line num="20" count="1" type="stmt"/>
+        <line num="21" count="1" type="stmt"/>
+        <line num="23" count="1" type="stmt"/>
+        <line num="28" count="1" type="stmt"/>
+        <line num="29" count="1" type="stmt"/>
+        <line num="33" count="4" type="stmt"/>
+        <line num="34" count="4" type="stmt"/>
+        <line num="40" count="3" type="stmt"/>
+        <line num="41" count="3" type="stmt"/>
+        <line num="43" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="44" count="2" type="stmt"/>
+        <line num="45" count="2" type="stmt"/>
+        <line num="48" count="3" type="stmt"/>
+        <line num="60" count="2" type="cond" truecount="1" falsecount="1"/>
+        <line num="62" count="2" type="stmt"/>
+        <line num="63" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="64" count="1" type="stmt"/>
+        <line num="65" count="1" type="stmt"/>
+        <line num="68" count="1" type="stmt"/>
+        <line num="70" count="1" type="stmt"/>
+        <line num="72" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="73" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="75" count="1" type="stmt"/>
+        <line num="76" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="78" count="1" type="stmt"/>
+        <line num="86" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="88" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="89" count="0" type="stmt"/>
+        <line num="93" count="1" type="stmt"/>
+        <line num="98" count="1" type="stmt"/>
+        <line num="101" count="1" type="stmt"/>
+        <line num="102" count="0" type="stmt"/>
+        <line num="112" count="1" type="stmt"/>
+        <line num="123" count="1" type="stmt"/>
+      </file>
+    </package>
+    <package name="state">
+      <metrics statements="59" coveredstatements="36" conditionals="13" coveredconditionals="6" methods="9" coveredmethods="6"/>
+      <file name="demandStore.tsx" path="C:\Users\nitta\Claude\Projects\【ナビ】 特定情報誘導型・高性能ナビ（Googleマップ連携）\Taxi_Nav_Expo\src\state\demandStore.tsx">
+        <metrics statements="59" coveredstatements="36" conditionals="13" coveredconditionals="6" methods="9" coveredmethods="6"/>
+        <line num="41" count="3" type="stmt"/>
+        <line num="52" count="3" type="stmt"/>
+        <line num="56" count="32" type="cond" truecount="5" falsecount="2"/>
+        <line num="58" count="11" type="stmt"/>
+        <line num="64" count="2" type="stmt"/>
+        <line num="71" count="8" type="stmt"/>
+        <line num="72" count="8" type="stmt"/>
+        <line num="73" count="19" type="stmt"/>
+        <line num="75" count="8" type="stmt"/>
+        <line num="84" count="1" type="stmt"/>
+        <line num="85" count="1" type="stmt"/>
+        <line num="86" count="1" type="stmt"/>
+        <line num="93" count="10" type="stmt"/>
+        <line num="99" count="0" type="stmt"/>
+        <line num="102" count="0" type="stmt"/>
+        <line num="126" count="3" type="stmt"/>
+        <line num="133" count="3" type="stmt"/>
+        <line num="136" count="29" type="stmt"/>
+        <line num="141" count="29" type="stmt"/>
+        <line num="144" count="0" type="stmt"/>
+        <line num="145" count="0" type="cond" truecount="0" falsecount="2"/>
+        <line num="149" count="0" type="stmt"/>
+        <line num="152" count="0" type="stmt"/>
+        <line num="154" count="0" type="stmt"/>
+        <line num="155" count="0" type="stmt"/>
+        <line num="156" count="0" type="stmt"/>
+        <line num="157" count="0" type="stmt"/>
+        <line num="159" count="0" type="stmt"/>
+        <line num="160" count="0" type="stmt"/>
+        <line num="164" count="0" type="stmt"/>
+        <line num="173" count="29" type="stmt"/>
+        <line num="175" count="10" type="stmt"/>
+        <line num="177" count="10" type="stmt"/>
+        <line num="178" count="10" type="stmt"/>
+        <line num="181" count="8" type="stmt"/>
+        <line num="182" count="8" type="stmt"/>
+        <line num="184" count="1" type="stmt"/>
+        <line num="185" count="1" type="stmt"/>
+        <line num="189" count="1" type="stmt"/>
+        <line num="198" count="29" type="stmt"/>
+        <line num="205" count="0" type="stmt"/>
+        <line num="207" count="0" type="stmt"/>
+        <line num="208" count="0" type="stmt"/>
+        <line num="209" count="0" type="stmt"/>
+        <line num="210" count="0" type="stmt"/>
+        <line num="212" count="0" type="stmt"/>
+        <line num="213" count="0" type="stmt"/>
+        <line num="217" count="0" type="stmt"/>
+        <line num="226" count="29" type="stmt"/>
+        <line num="227" count="0" type="stmt"/>
+        <line num="233" count="29" type="stmt"/>
+        <line num="234" count="10" type="stmt"/>
+        <line num="237" count="29" type="stmt"/>
+        <line num="246" count="29" type="stmt"/>
+        <line num="257" count="3" type="stmt"/>
+        <line num="258" count="30" type="stmt"/>
+        <line num="259" count="30" type="cond" truecount="1" falsecount="1"/>
+        <line num="260" count="0" type="stmt"/>
+        <line num="262" count="30" type="stmt"/>
+      </file>
+    </package>
+  </project>
+</coverage>

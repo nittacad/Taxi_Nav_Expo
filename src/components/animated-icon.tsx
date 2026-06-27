@@ -39,6 +39,7 @@ export function AnimatedSplashOverlay() {
           scheduleOnRN(setVisible, false);
         }
       })}
+      pointerEvents="none"
       style={styles.backgroundSolidColor}
     />
   );
@@ -125,7 +126,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
   },
   backgroundSolidColor: {
-    ...StyleSheet.absoluteFill,
+    ...StyleSheet.absoluteFillObject,
     backgroundColor: '#208AEF',
     zIndex: 1000,
   },

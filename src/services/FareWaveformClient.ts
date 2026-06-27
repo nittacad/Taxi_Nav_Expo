@@ -4,11 +4,11 @@
  */
 
 import {
-  getTokyoStationFareWaveform,
+  getStationFareWaveform,
   isFareWaveformStationSupported,
-} from '@/data/tokyoStationFareMock';
+} from '@/data/fareWaveformRegistry';
 import { ApiError } from '@/types';
-import { StationFareWaveformData, TimePreset } from '@/types/fareWaveform';
+import { StationFareWaveformData, DEFAULT_TIME_PRESET, TimePreset } from '@/types/fareWaveform';
 
 const MOCK_LATENCY_MS = 120;
 
@@ -21,12 +21,12 @@ function delay(ms: number): Promise<void> {
 export class FareWaveformClient {
   /**
    * 指定駅・曜日・時間帯の運賃波形データを取得する。
-   * 現状は東京駅（id=1）のみ対応。
+   * 現状は東京・品川・上野（モック）のみ対応。
    */
   async fetchStationFareWaveform(
     stationId: number,
     dayCategory: string,
-    timePreset: TimePreset = 'peak',
+    timePreset: TimePreset = DEFAULT_TIME_PRESET,
   ): Promise<StationFareWaveformData> {
     if (!isFareWaveformStationSupported(stationId)) {
       throw new ApiError(
@@ -38,8 +38,10 @@ export class FareWaveformClient {
     }
 
     await delay(MOCK_LATENCY_MS);
-    return getTokyoStationFareWaveform(dayCategory, timePreset);
+    return getStationFareWaveform(stationId, dayCategory, timePreset);
   }
 }
+
+export { isFareWaveformStationSupported };
 
 export const fareWaveformClient = new FareWaveformClient();

@@ -7,12 +7,10 @@ import React, { useState } from 'react';
 import { View, Text, Pressable, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
-import { contrastCheckColor } from '@/data/tokyoStationFareMock';
+import { contrastCheckColor } from '@/data/fareWaveformEngine';
 import {
   ExitFareWaveformSeries,
-  ExitId,
   FareWaveformLayerVisibility,
-  EXIT_ID_TO_LAYER_KEY,
 } from '@/types/fareWaveform';
 
 interface ColoredLegendCheckProps {
@@ -58,7 +56,7 @@ const ColoredLegendCheck: React.FC<ColoredLegendCheckProps> = ({
 interface FareWaveformLegendProps {
   exits: ExitFareWaveformSeries[];
   layerVisibility: FareWaveformLayerVisibility;
-  onToggle: (exitId: ExitId) => void;
+  onToggle: (exitId: string) => void;
 }
 
 export const FareWaveformLegend: React.FC<FareWaveformLegendProps> = ({
@@ -83,18 +81,15 @@ export const FareWaveformLegend: React.FC<FareWaveformLegendProps> = ({
       </Pressable>
 
       <View style={styles.legendRow}>
-        {exits.map((exit) => {
-          const key = EXIT_ID_TO_LAYER_KEY[exit.exitId];
-          return (
-            <ColoredLegendCheck
-              key={exit.exitId}
-              color={exit.color}
-              checked={layerVisibility[key]}
-              label={exit.exitName}
-              onToggle={() => onToggle(exit.exitId)}
-            />
-          );
-        })}
+        {exits.map((exit) => (
+          <ColoredLegendCheck
+            key={exit.exitId}
+            color={exit.color}
+            checked={layerVisibility[exit.exitId] ?? true}
+            label={exit.exitName}
+            onToggle={() => onToggle(exit.exitId)}
+          />
+        ))}
       </View>
 
       {routesOpen && (
@@ -121,7 +116,6 @@ const styles = StyleSheet.create({
     borderColor: '#E0E0E0',
     borderRadius: 6,
     backgroundColor: '#F8F9FA',
-    marginBottom: 8,
   },
   panelHeader: {
     flexDirection: 'row',

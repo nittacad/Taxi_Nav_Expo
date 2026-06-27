@@ -7,6 +7,7 @@
     "@types/jest": "29.5.14",
     "@types/react": "~19.1.10",
     "expo": "~54.0.34",
+    "expo-constants": "~18.0.10",
     "expo-device": "~8.0.10",
     "expo-font": "~14.0.12",
     "expo-image": "~3.0.11",
@@ -50,7 +51,19 @@
     "lint": "expo lint",
     "test": "jest",
     "test:coverage": "jest --coverage",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "build:offline-waveform": "npx tsx scripts/build-offline-waveform.ts",
+    "fetch:business-chains": "node scripts/fetch-business-chain-seed.mjs",
+    "fetch:business-chains:full": "node scripts/fetch-business-chain-seed.mjs --full",
+    "import:shareholder-meetings": "node scripts/import-shareholder-meetings.mjs",
+    "fetch:shareholder-meetings": "python scripts/fetch-shareholder-meetings-edinetdb.py",
+    "fetch:shareholder-meetings:dry": "python scripts/fetch-shareholder-meetings-edinetdb.py --dry-run",
+    "fetch:shareholder-meetings-edinet": "python scripts/fetch-shareholder-meetings-edinet.py",
+    "fetch:shareholder-meetings-edinet:dry": "python scripts/fetch-shareholder-meetings-edinet.py --dry-run",
+    "setup:shareholder-meetings-auto-fetch": "powershell -ExecutionPolicy Bypass -File scripts/install-shareholder-meetings-scheduler.ps1",
+    "uninstall:shareholder-meetings-auto-fetch": "powershell -ExecutionPolicy Bypass -File scripts/uninstall-shareholder-meetings-scheduler.ps1",
+    "run:shareholder-meetings-auto-fetch": "powershell -ExecutionPolicy Bypass -File scripts/scheduled-fetch-shareholder-meetings.ps1",
+    "publish:shareholder-meetings-json": "powershell -ExecutionPolicy Bypass -File scripts/publish-shareholder-meetings-json.ps1"
   },
   "private": true
 }

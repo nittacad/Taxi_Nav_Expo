@@ -1,0 +1,4 @@
+# 株主総会スケジュール — EDINET DB 自動取得 + 手動追記
+# npm run import:shareholder-meetings
+id,company_name,venue_name,venue_address,ward,latitude,longitude,meeting_date,start_time,participant_count
+agm_edinetdb_E39892_2026-03-24,リガク・ホールディングス,ベルサール,の変更についても注意喚起,渋谷区,35.699400,139.765600,2026-03-24,05:30,5000

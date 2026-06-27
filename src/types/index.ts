@@ -181,6 +181,7 @@ export type {
 } from './fareWaveform';
 
 export {
+  createDefaultLayerVisibility,
   DEFAULT_LAYER_VISIBILITY,
   DAY_CATEGORY_LABELS,
   EXIT_ID_TO_LAYER_KEY,

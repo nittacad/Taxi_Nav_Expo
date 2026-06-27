@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#F5CBA7',
     padding: 10,
-    marginBottom: 12,
+    marginTop: 8,
     gap: 6,
   },
   title: {
@@ -119,4 +119,4 @@ const styles = StyleSheet.create({
 });
 
 export default FareWaveformAirportBanner;
-
+

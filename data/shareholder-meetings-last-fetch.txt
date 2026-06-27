@@ -1,0 +1,3 @@
+﻿last_success: 2026-06-27 19:31:46
+mode: monthly-scheduled
+command: fetch-shareholder-meetings-edinetdb.py --replace

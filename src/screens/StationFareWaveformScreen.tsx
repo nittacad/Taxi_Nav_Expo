@@ -11,36 +11,37 @@ import {
   StyleSheet,
   ActivityIndicator,
   TouchableOpacity,
-  Pressable,
 } from 'react-native';
 import { useLocalSearchParams, useRouter } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
 
-import { FareWaveformChart } from '@/components/FareWaveformChart';
 import { FareWaveformAirportBanner } from '@/components/FareWaveformAirportBanner';
+import { FareWaveformChart } from '@/components/FareWaveformChart';
+import { FareWaveformChartControls } from '@/components/FareWaveformChartControls';
+import { FareWaveformExitPeaks } from '@/components/FareWaveformExitPeaks';
+import { FareWaveformFilterRow } from '@/components/FareWaveformFilterRow';
 import { FareWaveformLegend } from '@/components/FareWaveformLegend';
 import { FareWaveformSummaryMetrics } from '@/components/FareWaveformSummaryMetrics';
-import { FareWaveformToolbar } from '@/components/FareWaveformToolbar';
+import {
+  computeExitPeaks,
+  resolveTimeRange,
+} from '@/data/fareWaveformEngine';
 import { fareWaveformClient } from '@/services/FareWaveformClient';
 import {
   DayCategory,
-  DEFAULT_LAYER_VISIBILITY,
+  createDefaultLayerVisibility,
+  DEFAULT_TIME_PRESET,
   DEFAULT_ZOOM_PX_PER_MINUTE,
-  DAY_CATEGORY_LABELS,
+  FULL_DAY_DEFAULT_ZOOM_PX_PER_MINUTE,
   FareWaveformLayerVisibility,
+  isTwoHourTimePreset,
   OverlayMode,
   StationFareWaveformData,
-  TIME_PRESET_LABELS,
   TimePreset,
   ZoomLevel,
-  EXIT_ID_TO_LAYER_KEY,
   zoomStep,
 } from '@/types/fareWaveform';
 import { ApiError } from '@/types';
-
-const DAY_CATEGORIES: DayCategory[] = ['weekday', 'weekend_holiday'];
-
-const TIME_PRESETS: TimePreset[] = ['peak', 'peak_narrow', 'evening'];
 
 export const StationFareWaveformScreen: React.FC = () => {
   const router = useRouter();
@@ -48,15 +49,18 @@ export const StationFareWaveformScreen: React.FC = () => {
   const stationId = Number(stationIdParam ?? '0');
 
   const [dayCategory, setDayCategory] = useState<DayCategory>('weekday');
-  const [timePreset, setTimePreset] = useState<TimePreset>('peak');
+  const [timePreset, setTimePreset] = useState<TimePreset>(DEFAULT_TIME_PRESET);
   const [zoom, setZoom] = useState<ZoomLevel>(DEFAULT_ZOOM_PX_PER_MINUTE);
   const [overlayMode, setOverlayMode] = useState<OverlayMode>('capacity');
   const [data, setData] = useState<StationFareWaveformData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [layerVisibility, setLayerVisibility] = useState<FareWaveformLayerVisibility>(
-    DEFAULT_LAYER_VISIBILITY,
-  );
+  const [layerVisibility, setLayerVisibility] = useState<FareWaveformLayerVisibility>({});
+
+  const defaultZoom =
+    timePreset === 'full_day'
+      ? FULL_DAY_DEFAULT_ZOOM_PX_PER_MINUTE
+      : DEFAULT_ZOOM_PX_PER_MINUTE;
 
   const loadData = useCallback(async () => {
     setLoading(true);
@@ -68,6 +72,7 @@ export const StationFareWaveformScreen: React.FC = () => {
         timePreset,
       );
       setData(result);
+      setLayerVisibility(createDefaultLayerVisibility(result.exits));
     } catch (err) {
       const message =
         err instanceof ApiError
@@ -84,14 +89,29 @@ export const StationFareWaveformScreen: React.FC = () => {
     void loadData();
   }, [loadData]);
 
-  const toggleLayer = useCallback((exitId: keyof typeof EXIT_ID_TO_LAYER_KEY) => {
-    const key = EXIT_ID_TO_LAYER_KEY[exitId];
-    setLayerVisibility((prev) => ({ ...prev, [key]: !prev[key] }));
+  useEffect(() => {
+    setZoom(defaultZoom);
+  }, [defaultZoom]);
+
+  const toggleLayer = useCallback((exitId: string) => {
+    setLayerVisibility((prev) => ({ ...prev, [exitId]: !(prev[exitId] ?? true) }));
   }, []);
 
   const headerTitle = useMemo(
     () => (data?.stationName ? `${data.stationName} 運賃波形` : '運賃波形'),
     [data?.stationName],
+  );
+
+  const exitPeaks = useMemo(() => {
+    if (!data || !isTwoHourTimePreset(timePreset)) {
+      return [];
+    }
+    return computeExitPeaks(data.exits, data.timeLabels, layerVisibility);
+  }, [data, timePreset, layerVisibility]);
+
+  const timeRangeLabel = useMemo(
+    () => resolveTimeRange(timePreset).label,
+    [timePreset],
   );
 
   return (
@@ -117,11 +137,9 @@ export const StationFareWaveformScreen: React.FC = () => {
         </Text>
 
         <View style={styles.callout}>
-          <Text style={styles.calloutTitle}>ダイヤ合成</Text>
+          <Text style={styles.calloutTitle}>ダイヤ合成（モック）</Text>
           <Text style={styles.calloutBody}>
-            通常時刻表をベースに、臨時列車がある日は同じ1分スロットへ合成します（max
-            運賃・収容人数合計）。土日祝は1区分。平日を選ぶと臨時は少なめ（GW想定1本）。
-            本番では臨時ダイヤ JSON を日付指定で足し込みます。
+            本番時刻表の代わりにルール合成データを表示しています。時間帯は2時間刻みまたは始発〜終電（5:00–23:30）を選べます。
           </Text>
         </View>
 
@@ -141,76 +159,29 @@ export const StationFareWaveformScreen: React.FC = () => {
         {!loading && data && (
           <>
             <FareWaveformSummaryMetrics stats={data.stats} />
-            <FareWaveformAirportBanner highlights={data.airportHighlights} />
 
             <View style={styles.chartCard}>
-              <View style={styles.pickerRow}>
-                <Text style={styles.pickerLabel}>曜日</Text>
-                <View style={styles.chipRow}>
-                  {DAY_CATEGORIES.map((category) => {
-                    const selected = dayCategory === category;
-                    return (
-                      <Pressable
-                        key={category}
-                        style={[styles.chip, selected && styles.chipSelected]}
-                        onPress={() => setDayCategory(category)}
-                      >
-                        <Text
-                          style={[
-                            styles.chipText,
-                            selected && styles.chipTextSelected,
-                          ]}
-                        >
-                          {DAY_CATEGORY_LABELS[category]}
-                        </Text>
-                      </Pressable>
-                    );
-                  })}
-                </View>
-              </View>
+              <FareWaveformFilterRow
+                dayCategory={dayCategory}
+                onDayCategoryChange={setDayCategory}
+                timePreset={timePreset}
+                onTimePresetChange={setTimePreset}
+              />
 
-              <View style={styles.pickerRow}>
-                <Text style={styles.pickerLabel}>時間帯</Text>
-                <ScrollView
-                  horizontal
-                  showsHorizontalScrollIndicator={false}
-                  contentContainerStyle={styles.chipRow}
-                >
-                  {TIME_PRESETS.map((preset) => {
-                    const selected = timePreset === preset;
-                    return (
-                      <Pressable
-                        key={preset}
-                        style={[styles.chip, selected && styles.chipSelected]}
-                        onPress={() => setTimePreset(preset)}
-                      >
-                        <Text
-                          style={[
-                            styles.chipText,
-                            selected && styles.chipTextSelected,
-                          ]}
-                        >
-                          {TIME_PRESET_LABELS[preset]}
-                        </Text>
-                      </Pressable>
-                    );
-                  })}
-                </ScrollView>
-              </View>
+              <FareWaveformChartControls
+                zoom={zoom}
+                defaultZoom={defaultZoom}
+                onZoomIn={() => setZoom((z) => zoomStep(z, 1))}
+                onZoomOut={() => setZoom((z) => zoomStep(z, -1))}
+                onZoomReset={() => setZoom(defaultZoom)}
+                overlayMode={overlayMode}
+                onOverlayChange={setOverlayMode}
+              />
 
               <FareWaveformLegend
                 exits={data.exits}
                 layerVisibility={layerVisibility}
                 onToggle={toggleLayer}
-              />
-
-              <FareWaveformToolbar
-                zoom={zoom}
-                onZoomIn={() => setZoom((z) => zoomStep(z, 1))}
-                onZoomOut={() => setZoom((z) => zoomStep(z, -1))}
-                onZoomReset={() => setZoom(DEFAULT_ZOOM_PX_PER_MINUTE)}
-                overlayMode={overlayMode}
-                onOverlayChange={setOverlayMode}
               />
 
               <FareWaveformChart
@@ -223,6 +194,15 @@ export const StationFareWaveformScreen: React.FC = () => {
                 airportHighlights={data.airportHighlights}
                 pxPerMinute={zoom}
               />
+
+              {isTwoHourTimePreset(timePreset) && (
+                <FareWaveformExitPeaks
+                  timeRangeLabel={timeRangeLabel}
+                  peaks={exitPeaks}
+                />
+              )}
+
+              <FareWaveformAirportBanner highlights={data.airportHighlights} />
             </View>
           </>
         )}
@@ -312,39 +292,6 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     elevation: 2,
     gap: 8,
-  },
-  pickerRow: {
-    gap: 6,
-  },
-  pickerLabel: {
-    fontSize: 12,
-    fontWeight: '600',
-    color: '#2C3E50',
-  },
-  chipRow: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 8,
-  },
-  chip: {
-    paddingHorizontal: 12,
-    paddingVertical: 8,
-    borderRadius: 20,
-    backgroundColor: '#ECF0F1',
-    borderWidth: 1,
-    borderColor: '#ECF0F1',
-  },
-  chipSelected: {
-    backgroundColor: '#3498DB',
-    borderColor: '#3498DB',
-  },
-  chipText: {
-    fontSize: 12,
-    color: '#2C3E50',
-    fontWeight: '500',
-  },
-  chipTextSelected: {
-    color: '#FFFFFF',
   },
 });
 
