@@ -43,7 +43,7 @@
       "reactCompiler": true
     },
     "extra": {
-      "shareholderMeetingsJsonUrl": ""
+      "shareholderMeetingsJsonUrl": "https://raw.githubusercontent.com/nittacad/Taxi_Nav_Expo/master/data/shareholder-meetings.json"
     }
   }
 }
