@@ -1,0 +1,10 @@
+{
+  "fetchedAt": "2026-06-28T10:49:39.447911",
+  "rangeSince": "2026-06-06",
+  "rangeUntil": "2026-07-30",
+  "meetingCount": 18,
+  "sources": [
+    "med_mreview",
+    "m3"
+  ]
+}
