@@ -11,6 +11,9 @@ import { DemandProvider } from '@/state/demandStore';
 import { NotificationProvider } from '@/state/notificationStore';
 import { AnimatedSplashOverlay } from '@/components/animated-icon';
 import { initShareholderMeetingSchedule } from '@/services/shareholderMeetingRemoteStore';
+import { initMedicalMeetingSchedule } from '@/services/medicalMeetingRemoteStore';
+import { initCruiseTerminalSchedule } from '@/services/cruiseTerminalRemoteStore';
+import { initFareWaveformTokyoSchedule } from '@/services/fareWaveformTokyoRemoteStore';
 
 export default function TabLayout() {
   const scheme = useColorScheme();
@@ -18,6 +21,9 @@ export default function TabLayout() {
 
   useEffect(() => {
     void initShareholderMeetingSchedule();
+    void initMedicalMeetingSchedule();
+    void initCruiseTerminalSchedule();
+    void initFareWaveformTokyoSchedule();
   }, []);
 
   return (

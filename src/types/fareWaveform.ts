@@ -195,10 +195,13 @@ export const ZOOM_LEVELS = [4, 6, 8, 12, 16] as const;
 
 export type ZoomLevel = (typeof ZOOM_LEVELS)[number];
 
+/** 東京駅 — JSON 配信（fareWaveformTokyoRemoteStore） */
+export const FARE_WAVEFORM_TOKYO_STATION_ID = 1;
+
 export const FARE_WAVEFORM_SUPPORTED_STATION_IDS: ReadonlySet<number> = new Set([
-  1, // 東京
-  3, // 品川
-  6, // 上野
+  FARE_WAVEFORM_TOKYO_STATION_ID, // 東京（JSON）
+  3, // 品川（モック）
+  6, // 上野（モック）
 ]);
 
 export function resolveDayCategory(value: string): DayCategory {

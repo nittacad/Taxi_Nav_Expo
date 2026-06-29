@@ -1,10 +1,12 @@
 import { FareWaveformClient } from '@/services/FareWaveformClient';
+import { resetFareWaveformTokyoStoreForTests } from '@/services/fareWaveformTokyoRemoteStore';
 
 describe('FareWaveformClient', () => {
   let client: FareWaveformClient;
 
   beforeEach(() => {
     client = new FareWaveformClient();
+    resetFareWaveformTokyoStoreForTests();
     jest.useFakeTimers();
   });
 
@@ -14,7 +16,7 @@ describe('FareWaveformClient', () => {
 
   it('fetchStationFareWaveform: 東京駅の平日データを取得できる', async () => {
     const promise = client.fetchStationFareWaveform(1, 'weekday');
-    jest.advanceTimersByTime(200);
+    await jest.runAllTimersAsync();
     const result = await promise;
 
     expect(result.stationId).toBe(1);

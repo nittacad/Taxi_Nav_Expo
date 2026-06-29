@@ -3,6 +3,10 @@
     "name": "Taxi_Nav_Expo",
     "slug": "Taxi_Nav_Expo",
     "version": "1.0.0",
+    "sdkVersion": "54.0.0",
+    "runtimeVersion": {
+      "policy": "sdkVersion"
+    },
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "taxinavexpo",
@@ -43,7 +47,11 @@
       "reactCompiler": true
     },
     "extra": {
-      "shareholderMeetingsJsonUrl": "https://raw.githubusercontent.com/nittacad/Taxi_Nav_Expo/master/data/shareholder-meetings.json"
+      "shareholderMeetingsJsonUrl": "https://raw.githubusercontent.com/nittacad/Taxi_Nav_Expo/master/data/shareholder-meetings.json",
+      "medicalMeetingsJsonUrl": "https://raw.githubusercontent.com/nittacad/Taxi_Nav_Expo/master/data/medical-meetings.json",
+      "cruiseTerminalsJsonUrl": "https://raw.githubusercontent.com/nittacad/Taxi_Nav_Expo/master/data/cruise-terminals.json",
+      "fareWaveformTokyoJsonUrl": "https://raw.githubusercontent.com/nittacad/Taxi_Nav_Expo/master/data/fare-waveform-tokyo.json",
+      "enableNotificationTestPanel": true
     }
   }
 }

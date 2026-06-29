@@ -685,5 +685,3 @@ export function getTokyoStationFareWaveform(
 
 
 export { EXITS as TOKYO_STATION_EXITS };
-export { contrastCheckColor } from '@/data/fareWaveformEngine';
-export { isFareWaveformStationSupported } from '@/data/fareWaveformRegistry';

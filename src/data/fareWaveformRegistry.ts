@@ -6,6 +6,7 @@
 import { getTokyoStationFareWaveform } from '@/data/tokyoStationFareMock';
 import { getShinagawaStationFareWaveform } from '@/data/shinagawaStationFareMock';
 import { getUenoStationFareWaveform } from '@/data/uenoStationFareMock';
+import { getTokyoFareWaveformFromStore } from '@/services/fareWaveformTokyoRemoteStore';
 import {
   FARE_WAVEFORM_SUPPORTED_STATION_IDS,
   DEFAULT_TIME_PRESET,
@@ -23,8 +24,13 @@ export function getStationFareWaveform(
   timePreset: TimePreset = DEFAULT_TIME_PRESET,
 ): StationFareWaveformData {
   switch (stationId) {
-    case 1:
+    case 1: {
+      const fromJson = getTokyoFareWaveformFromStore(dayCategory, timePreset);
+      if (fromJson) {
+        return fromJson;
+      }
       return getTokyoStationFareWaveform(dayCategory, timePreset);
+    }
     case 3:
       return getShinagawaStationFareWaveform(dayCategory, timePreset);
     case 6:
