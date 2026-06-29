@@ -14,6 +14,7 @@ import { initShareholderMeetingSchedule } from '@/services/shareholderMeetingRem
 import { initMedicalMeetingSchedule } from '@/services/medicalMeetingRemoteStore';
 import { initCruiseTerminalSchedule } from '@/services/cruiseTerminalRemoteStore';
 import { initFareWaveformTokyoSchedule } from '@/services/fareWaveformTokyoRemoteStore';
+import { initFareWaveformUenoSchedule } from '@/services/fareWaveformUenoRemoteStore';
 
 export default function TabLayout() {
   const scheme = useColorScheme();
@@ -24,6 +25,7 @@ export default function TabLayout() {
     void initMedicalMeetingSchedule();
     void initCruiseTerminalSchedule();
     void initFareWaveformTokyoSchedule();
+    void initFareWaveformUenoSchedule();
   }, []);
 
   return (

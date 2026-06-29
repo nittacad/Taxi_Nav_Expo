@@ -6,6 +6,7 @@
 import { getTokyoStationFareWaveform } from '@/data/tokyoStationFareMock';
 import { getShinagawaStationFareWaveform } from '@/data/shinagawaStationFareMock';
 import { getUenoStationFareWaveform } from '@/data/uenoStationFareMock';
+import { getUenoFareWaveformFromStore } from '@/services/fareWaveformUenoRemoteStore';
 import { getTokyoFareWaveformFromStore } from '@/services/fareWaveformTokyoRemoteStore';
 import {
   FARE_WAVEFORM_SUPPORTED_STATION_IDS,
@@ -33,8 +34,13 @@ export function getStationFareWaveform(
     }
     case 3:
       return getShinagawaStationFareWaveform(dayCategory, timePreset);
-    case 6:
+    case 6: {
+      const fromJson = getUenoFareWaveformFromStore(dayCategory, timePreset);
+      if (fromJson) {
+        return fromJson;
+      }
       return getUenoStationFareWaveform(dayCategory, timePreset);
+    }
     default:
       throw new Error(`Unsupported station fare waveform: ${stationId}`);
   }

@@ -51,6 +51,7 @@
       "medicalMeetingsJsonUrl": "https://raw.githubusercontent.com/nittacad/Taxi_Nav_Expo/master/data/medical-meetings.json",
       "cruiseTerminalsJsonUrl": "https://raw.githubusercontent.com/nittacad/Taxi_Nav_Expo/master/data/cruise-terminals.json",
       "fareWaveformTokyoJsonUrl": "https://raw.githubusercontent.com/nittacad/Taxi_Nav_Expo/master/data/fare-waveform-tokyo.json",
+      "fareWaveformUenoJsonUrl": "https://raw.githubusercontent.com/nittacad/Taxi_Nav_Expo/master/data/fare-waveform-ueno.json",
       "enableNotificationTestPanel": true
     }
   }
