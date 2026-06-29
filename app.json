@@ -52,6 +52,7 @@
       "cruiseTerminalsJsonUrl": "https://raw.githubusercontent.com/nittacad/Taxi_Nav_Expo/master/data/cruise-terminals.json",
       "fareWaveformTokyoJsonUrl": "https://raw.githubusercontent.com/nittacad/Taxi_Nav_Expo/master/data/fare-waveform-tokyo.json",
       "fareWaveformUenoJsonUrl": "https://raw.githubusercontent.com/nittacad/Taxi_Nav_Expo/master/data/fare-waveform-ueno.json",
+      "fareWaveformAkihabaraJsonUrl": "https://raw.githubusercontent.com/nittacad/Taxi_Nav_Expo/master/data/fare-waveform-akihabara.json",
       "enableNotificationTestPanel": true
     }
   }

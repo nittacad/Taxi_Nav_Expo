@@ -1,5 +1,6 @@
 import { minuteToLabel } from '@/data/fareWaveformEngine';
 import { isFareWaveformStationSupported } from '@/data/fareWaveformRegistry';
+import { getAkihabaraStationFareWaveform } from '@/data/akihabaraStationFareMock';
 import { getShinagawaStationFareWaveform } from '@/data/shinagawaStationFareMock';
 import {
   JR_BASE_FARE,
@@ -157,11 +158,31 @@ describe('uenoStationFareMock', () => {
   });
 });
 
+describe('akihabaraStationFareMock', () => {
+  it('getAkihabaraStationFareWaveform: 3出口の波形を返す', () => {
+    const data = getAkihabaraStationFareWaveform('weekday', 'slot_1020');
+    expect(data.stationId).toBe(8);
+    expect(data.stationName).toBe('秋葉原駅');
+    expect(data.exits).toHaveLength(3);
+    expect(data.exits.map((e) => e.exitId)).toEqual(
+      expect.arrayContaining(['denki-gai', 'showa-dori', 'sobu-central']),
+    );
+  });
+
+  it('getAkihabaraStationFareWaveform: 電気街口に到着イベントがある', () => {
+    const data = getAkihabaraStationFareWaveform('weekday', 'slot_1020');
+    const denkiGai = data.exits.find((e) => e.exitId === 'denki-gai');
+    expect(Math.max(...(denkiGai?.fareByMinute ?? []))).toBeGreaterThan(0);
+    expect(data.stats.arrivalEventCount).toBeGreaterThan(0);
+  });
+});
+
 describe('fareWaveformRegistry', () => {
-  it('isFareWaveformStationSupported: 東京・品川・上野のみ true', () => {
+  it('isFareWaveformStationSupported: 東京・品川・上野・秋葉原のみ true', () => {
     expect(isFareWaveformStationSupported(1)).toBe(true);
     expect(isFareWaveformStationSupported(3)).toBe(true);
     expect(isFareWaveformStationSupported(6)).toBe(true);
+    expect(isFareWaveformStationSupported(8)).toBe(true);
     expect(isFareWaveformStationSupported(2)).toBe(false);
   });
 });

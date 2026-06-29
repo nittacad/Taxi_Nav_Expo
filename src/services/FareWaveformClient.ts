@@ -1,17 +1,19 @@
 /**
  * FareWaveformClient.ts
  * 駅別運賃波形 API クライアント
- * 東京・上野: JSON（同梱 + リモート） / 品川: モック
+ * 東京・上野・秋葉原: JSON（同梱 + リモート） / 品川: モック
  */
 
 import {
   getStationFareWaveform,
   isFareWaveformStationSupported,
 } from '@/data/fareWaveformRegistry';
+import { initFareWaveformAkihabaraSchedule } from '@/services/fareWaveformAkihabaraRemoteStore';
 import { initFareWaveformTokyoSchedule } from '@/services/fareWaveformTokyoRemoteStore';
 import { initFareWaveformUenoSchedule } from '@/services/fareWaveformUenoRemoteStore';
 import { ApiError } from '@/types';
 import {
+  FARE_WAVEFORM_AKIHABARA_STATION_ID,
   FARE_WAVEFORM_TOKYO_STATION_ID,
   FARE_WAVEFORM_UENO_STATION_ID,
   StationFareWaveformData,
@@ -21,10 +23,11 @@ import {
 
 const MOCK_LATENCY_MS = 120;
 
-const JSON_STATION_IDS = new Set<number>([
-  FARE_WAVEFORM_TOKYO_STATION_ID,
-  FARE_WAVEFORM_UENO_STATION_ID,
-]);
+const JSON_STATION_INIT: Record<number, () => Promise<void>> = {
+  [FARE_WAVEFORM_TOKYO_STATION_ID]: initFareWaveformTokyoSchedule,
+  [FARE_WAVEFORM_UENO_STATION_ID]: initFareWaveformUenoSchedule,
+  [FARE_WAVEFORM_AKIHABARA_STATION_ID]: initFareWaveformAkihabaraSchedule,
+};
 
 function delay(ms: number): Promise<void> {
   return new Promise((resolve) => {
@@ -32,20 +35,10 @@ function delay(ms: number): Promise<void> {
   });
 }
 
-async function ensureJsonStationSchedule(stationId: number): Promise<void> {
-  if (stationId === FARE_WAVEFORM_TOKYO_STATION_ID) {
-    await initFareWaveformTokyoSchedule();
-    return;
-  }
-  if (stationId === FARE_WAVEFORM_UENO_STATION_ID) {
-    await initFareWaveformUenoSchedule();
-  }
-}
-
 export class FareWaveformClient {
   /**
    * 指定駅・曜日・時間帯の運賃波形データを取得する。
-   * 東京・上野は JSON、品川はモック。
+   * 東京・上野・秋葉原は JSON、品川はモック。
    */
   async fetchStationFareWaveform(
     stationId: number,
@@ -61,8 +54,9 @@ export class FareWaveformClient {
       );
     }
 
-    if (JSON_STATION_IDS.has(stationId)) {
-      await ensureJsonStationSchedule(stationId);
+    const initJson = JSON_STATION_INIT[stationId];
+    if (initJson) {
+      await initJson();
     } else {
       await delay(MOCK_LATENCY_MS);
     }

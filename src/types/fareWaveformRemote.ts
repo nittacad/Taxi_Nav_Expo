@@ -33,6 +33,8 @@ export const FARE_WAVEFORM_TOKYO_STATION_ID = 1;
 
 export const FARE_WAVEFORM_UENO_STATION_ID = 6;
 
+export const FARE_WAVEFORM_AKIHABARA_STATION_ID = 8;
+
 export function makeFareWaveformDatasetKey(
   stationId: number,
   dayCategory: string,

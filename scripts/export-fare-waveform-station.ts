@@ -52,12 +52,14 @@ export function exportFareWaveformStation(options: ExportFareWaveformStationOpti
   mkdirSync(dirname(jsonPath), { recursive: true });
   writeFileSync(jsonPath, `${JSON.stringify(payload, null, 2)}\n`, 'utf8');
 
+  const exportConstByStationId: Record<number, string> = {
+    1: 'FARE_WAVEFORM_TOKYO_IMPORTED',
+    6: 'FARE_WAVEFORM_UENO_IMPORTED',
+    8: 'FARE_WAVEFORM_AKIHABARA_IMPORTED',
+  };
   const exportConstName =
-    options.stationId === 1
-      ? 'FARE_WAVEFORM_TOKYO_IMPORTED'
-      : options.stationId === 6
-        ? 'FARE_WAVEFORM_UENO_IMPORTED'
-        : `FARE_WAVEFORM_STATION_${options.stationId}_IMPORTED`;
+    exportConstByStationId[options.stationId] ??
+    `FARE_WAVEFORM_STATION_${options.stationId}_IMPORTED`;
 
   const generated = `/**
  * AUTO-GENERATED — 手編集しない

@@ -3,9 +3,11 @@
  * 駅別運賃波形モックのルーティング
  */
 
+import { getAkihabaraStationFareWaveform } from '@/data/akihabaraStationFareMock';
 import { getTokyoStationFareWaveform } from '@/data/tokyoStationFareMock';
 import { getShinagawaStationFareWaveform } from '@/data/shinagawaStationFareMock';
 import { getUenoStationFareWaveform } from '@/data/uenoStationFareMock';
+import { getAkihabaraFareWaveformFromStore } from '@/services/fareWaveformAkihabaraRemoteStore';
 import { getUenoFareWaveformFromStore } from '@/services/fareWaveformUenoRemoteStore';
 import { getTokyoFareWaveformFromStore } from '@/services/fareWaveformTokyoRemoteStore';
 import {
@@ -40,6 +42,13 @@ export function getStationFareWaveform(
         return fromJson;
       }
       return getUenoStationFareWaveform(dayCategory, timePreset);
+    }
+    case 8: {
+      const fromJson = getAkihabaraFareWaveformFromStore(dayCategory, timePreset);
+      if (fromJson) {
+        return fromJson;
+      }
+      return getAkihabaraStationFareWaveform(dayCategory, timePreset);
     }
     default:
       throw new Error(`Unsupported station fare waveform: ${stationId}`);

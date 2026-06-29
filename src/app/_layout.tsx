@@ -13,6 +13,7 @@ import { AnimatedSplashOverlay } from '@/components/animated-icon';
 import { initShareholderMeetingSchedule } from '@/services/shareholderMeetingRemoteStore';
 import { initMedicalMeetingSchedule } from '@/services/medicalMeetingRemoteStore';
 import { initCruiseTerminalSchedule } from '@/services/cruiseTerminalRemoteStore';
+import { initFareWaveformAkihabaraSchedule } from '@/services/fareWaveformAkihabaraRemoteStore';
 import { initFareWaveformTokyoSchedule } from '@/services/fareWaveformTokyoRemoteStore';
 import { initFareWaveformUenoSchedule } from '@/services/fareWaveformUenoRemoteStore';
 
@@ -26,6 +27,7 @@ export default function TabLayout() {
     void initCruiseTerminalSchedule();
     void initFareWaveformTokyoSchedule();
     void initFareWaveformUenoSchedule();
+    void initFareWaveformAkihabaraSchedule();
   }, []);
 
   return (

@@ -1,4 +1,5 @@
 import { FareWaveformClient } from '@/services/FareWaveformClient';
+import { resetFareWaveformAkihabaraStoreForTests } from '@/services/fareWaveformAkihabaraRemoteStore';
 import { resetFareWaveformTokyoStoreForTests } from '@/services/fareWaveformTokyoRemoteStore';
 import { resetFareWaveformUenoStoreForTests } from '@/services/fareWaveformUenoRemoteStore';
 
@@ -9,6 +10,7 @@ describe('FareWaveformClient', () => {
     client = new FareWaveformClient();
     resetFareWaveformTokyoStoreForTests();
     resetFareWaveformUenoStoreForTests();
+    resetFareWaveformAkihabaraStoreForTests();
     jest.useFakeTimers();
   });
 
@@ -46,6 +48,16 @@ describe('FareWaveformClient', () => {
     expect(result.stationId).toBe(6);
     expect(result.stationName).toBe('上野駅');
     expect(result.exits.some((e) => e.exitId === 'keisei-ueno')).toBe(true);
+  });
+
+  it('fetchStationFareWaveform: 秋葉原駅の平日データを取得できる', async () => {
+    const promise = client.fetchStationFareWaveform(8, 'weekday');
+    await jest.runAllTimersAsync();
+    const result = await promise;
+
+    expect(result.stationId).toBe(8);
+    expect(result.stationName).toBe('秋葉原駅');
+    expect(result.exits).toHaveLength(3);
   });
 
   it('fetchStationFareWaveform: 未対応駅は ApiError を投げる', async () => {
